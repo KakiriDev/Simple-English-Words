@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "828011168493",
+    "firebase_url": "https://simply-english-words.firebaseio.com",
+    "project_id": "simply-english-words",
+    "storage_bucket": "simply-english-words.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828011168493:android:cb6aaf10243ee310",
+        "android_client_info": {
+          "package_name": "com.kakiridev.simpleenglishwords"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828011168493-ekac8rr1942mbvuk7fh9a39q94javdja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDil8CdX8O4YNkRNOm_b1WpUrptuJUkD8A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
