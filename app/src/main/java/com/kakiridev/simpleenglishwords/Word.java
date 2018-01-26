@@ -3,9 +3,10 @@ package com.kakiridev.simpleenglishwords;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Word implements Parcelable{
+//public class Word implements Parcelable{
+public class Word{
 
-    /** PARCELABLE **/
+    /** PARCELABLE
     public static final Creator<Word> CREATOR = new Creator<Word>() {
         @Override public Word createFromParcel(Parcel parcel) {
             return new Word(parcel);
@@ -15,13 +16,13 @@ public class Word implements Parcelable{
             return new Word[size];
         }
     };
-
+     **/
     public String mId;
     public String mNazwaPl;
     public String mNazwaEn;
     public String mCategory;
 
-    /** PARCELABLE **/
+    /** PARCELABLE
     public Word(Parcel in) {
         //kolejnosc wczytywania musi byc taka sama jak zapisywania
         mId = in.readString();
@@ -29,7 +30,7 @@ public class Word implements Parcelable{
         mNazwaEn = in.readString();
         mCategory = in.readString();
     }
-
+     **/
 
 
 
@@ -77,6 +78,7 @@ public class Word implements Parcelable{
         this.mCategory = mCategory;
     }
 
+/** PARCELABLE
     @Override
     public int describeContents() {
         return 0;
@@ -89,4 +91,5 @@ public class Word implements Parcelable{
         parcel.writeString(mNazwaEn);
         parcel.writeString(mCategory);
     }
+    **/
 }

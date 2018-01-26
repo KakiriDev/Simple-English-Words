@@ -25,51 +25,16 @@
             android:gravity="center"
             android:text="Show Words List" />
 
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
-
-
-        <EditText
-            android:id="@+id/PL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="PL"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/EN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="EN"
-            android:inputType="textPersonName" />
-
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_add_word"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Dodaj" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            android:text="Coppyright 2018" />
-
+            android:text="Add New Word" />
 
     </LinearLayout>
+
+
+
 </LinearLayout>

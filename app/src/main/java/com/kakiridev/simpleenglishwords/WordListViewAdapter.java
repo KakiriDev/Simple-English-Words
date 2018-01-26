@@ -1,12 +1,15 @@
 package com.kakiridev.simpleenglishwords;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WordListViewAdapter extends ArrayAdapter<Word> {
@@ -15,11 +18,15 @@ public class WordListViewAdapter extends ArrayAdapter<Word> {
 
     public WordListViewAdapter(Context context, int textViewResourceId, List<Word> objects) {
         super(context, textViewResourceId, objects);
+        Log.v("DTAG", "Class name: WordListViewAdapter Method name: WordListViewAdapter");
+
         mInflater = LayoutInflater.from(getContext());
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
 
         ViewHolder holder;
 
