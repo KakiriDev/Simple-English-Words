@@ -19,7 +19,7 @@ public class StartView extends AppCompatActivity {
         btnToListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity_WordListWiew();
+                startActivity_WordListView();
             }
         });
 
@@ -39,7 +39,7 @@ public class StartView extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void startActivity_WordListWiew (){
+    public void startActivity_WordListView (){
         Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
         Intent i = new Intent(this, WordListView.class);
