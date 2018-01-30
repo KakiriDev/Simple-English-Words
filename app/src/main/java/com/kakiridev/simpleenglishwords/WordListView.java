@@ -1,7 +1,6 @@
 package com.kakiridev.simpleenglishwords;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +19,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class WordListView extends AppCompatActivity {
 
@@ -44,16 +41,12 @@ public class WordListView extends AppCompatActivity {
         adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
         listview = findViewById(R.id.listview);
         listview.setAdapter(adapter);
-        initListViewOnItemLongClick();
         registerForContextMenu(listview);
+        adapter.notifyDataSetChanged();
     }
-
 
     // Add Context Menu
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-
-        //menu.setHeaderTitle(taskDesc);
-
         menu.add(0, v.getId(), 0, "Edit");
         menu.add(0, v.getId(), 0, "Delete");
     }
@@ -78,27 +71,6 @@ public class WordListView extends AppCompatActivity {
             intent.putExtra("nazwaEn", word.getmNazwaEn());
             intent.putExtra("category", word.getmCategory());
             startActivity(intent);
-
-            //startActivityForResult(intent, 1);
-/**
-            HashMap<String, String> dataMap = new HashMap<String, String>(); //kolejność wczytania do bazy odwrotna niz zapisu
-            dataMap.put("id", word.getmId());
-            dataMap.put("nazwaPl", data.getStringExtra("nazwaPl"));
-            dataMap.put("nazwaEn", data.getStringExtra("nazwaEn"));
-            dataMap.put("category", data.getStringExtra("category"));
-
-            //sprawdzenie poprawnosci zapisu do bazy
-            mDatabase.setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(WordListView.this, "Stored.", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(WordListView.this, "Error.", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
- **/
         }
         if(item.getTitle()=="Delete") {
 
@@ -123,23 +95,6 @@ public class WordListView extends AppCompatActivity {
         }
         return super.onContextItemSelected(item);
     }
-
-
-    // add longClickListener
-    private void initListViewOnItemLongClick() {
-        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-
-                Word task = words.get(position);
-                String wordId = task.getmId();
-                Log.v("DTAG","pos: " + position);
-                return false;
-            }
-        });
-    }
-
-
 
     // Get all words for firebase and add it to "words" list
     private ArrayList<Word> getWords() {

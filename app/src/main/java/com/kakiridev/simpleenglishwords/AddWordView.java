@@ -28,22 +28,14 @@ public class AddWordView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word_view);
 
-        // check isEdit mode
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle!=null) {
-            if(bundle.containsKey("isEdit")) {
-                isEdit = true;
-            }
-        }
-
-        // Set Edit name Pl/En
         ET_PL = findViewById(R.id.PL);
         ET_EN = findViewById(R.id.EN);
-        if (isEdit == true){
-            ET_PL.setText(bundle.getString("nazwaPl"));
-            ET_EN.setText(bundle.getString("nazwaEn"));
-            id = bundle.getString("id");
+
+        Bundle bundle = getBundle();
+        isEdit = checkIsEdit(bundle);
+
+        if(isEdit){
+            setET(bundle);
         }
 
         Button button = findViewById(R.id.button);
@@ -64,6 +56,27 @@ public class AddWordView extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void setET(Bundle bundle){
+        ET_PL.setText(bundle.getString("nazwaPl"));
+        ET_EN.setText(bundle.getString("nazwaEn"));
+        id = bundle.getString("id");
+    }
+
+    public boolean checkIsEdit(Bundle bundle){
+        if (bundle!=null) {
+            if(bundle.containsKey("isEdit")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Bundle getBundle (){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        return bundle;
     }
 
     // Add new word to firebase
@@ -91,11 +104,27 @@ public class AddWordView extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(AddWordView.this, "Dodano nowe słowo: "+ nazwaPl + " / " + nazwaEn + "." , Toast.LENGTH_LONG).show();
+                    if (checkIsEdit(getBundle())) {
+                        startListViewActivity();
+                        Toast.makeText(AddWordView.this, "Edytowano słowo: "+ nazwaPl + " / " + nazwaEn + "." , Toast.LENGTH_LONG).show();
+                    } else {
+                        startMainActivity();
+                        Toast.makeText(AddWordView.this, "Dodano nowe słowo: "+ nazwaPl + " / " + nazwaEn + "." , Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(AddWordView.this, "Error.", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    public void startMainActivity(){
+        Intent intent = new Intent(this, StartView.class);
+        startActivity(intent);
+    }
+
+    public void startListViewActivity(){
+        Intent intent = new Intent(this, WordListView.class);
+        startActivity(intent);
     }
 }
