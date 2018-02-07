@@ -17,6 +17,13 @@
         android:orientation="vertical"
         android:layout_gravity="top">
 
+        <TextView
+            android:id="@+id/textViewUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Witaj" />
+
         <Button
             android:id="@+id/btn_show_wordslist"
             android:layout_marginTop="15dp"
@@ -33,7 +40,15 @@
             android:gravity="center"
             android:text="Add New Word" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:id="@+id/buttonLogout"
+            android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
+
 
 
 

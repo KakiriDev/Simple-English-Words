@@ -10,15 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".StartView">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".WordListView" />
-        <activity android:name=".AddWordView"
-            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".AddWordView"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".FB_Login.LoginView" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".FB_Login.LoginProfile" />
+        <activity android:name=".FB_Login.Login"></activity>
     </application>
 
 </manifest>
