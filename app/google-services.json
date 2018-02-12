@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "828011168493-qr3td1p6dt8pfth0qn6bce8d4trkaof0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kakiridev.simpleenglishwords",
+            "certificate_hash": "2e22fc918beb11bb3834feb9126b7a296439f89c"
+          }
+        },
+        {
           "client_id": "828011168493-ekac8rr1942mbvuk7fh9a39q94javdja.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828011168493-ekac8rr1942mbvuk7fh9a39q94javdja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
