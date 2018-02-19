@@ -1,12 +1,10 @@
-package com.kakiridev.simpleenglishwords;
+package com.kakiridev.simpleenglishwords.LoginView;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -15,8 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -24,27 +20,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.kakiridev.simpleenglishwords.MainView;
+import com.kakiridev.simpleenglishwords.R;
 
 
-public class SignInActivity extends AppCompatActivity {
-    private static final String TAG = "SignInActivity";
+public class LoginView extends AppCompatActivity {
+    private static final String TAG = "LoginView";
     private static final int RC_SIGN_IN = 0 ;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private com.google.android.gms.common.SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
-    private Button signOutButton;
-    private TextView nameTextView;
-    private TextView emailTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.activity_login);
 
         signInButton = (com.google.android.gms.common.SignInButton)findViewById(R.id.sign_in_button);
-        //signOutButton = (Button)findViewById(R.id.sign_out_button);
-        nameTextView = (TextView)findViewById(R.id.name_text_view);
-        emailTextView = (TextView)findViewById(R.id.email_text_view);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -62,28 +55,16 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                Log.d("DTAG", "onAuthStateChanged");
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    if(user.getDisplayName() != null) {
-                        nameTextView.setText("HI " + user.getDisplayName().toString());
-                        emailTextView.setText(user.getEmail().toString());
-                        startMainActivity();
-                        finish();
-                    }
-                } else {
-                    // User is signed out
-                    Log.d("DTAG", "SuserLog1-");
+                if(isLogedUser()) {
+                    startMainActivity();
+                    finish();
                 }
-                // ...
             }
         };
-
-
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,16 +72,6 @@ public class SignInActivity extends AppCompatActivity {
                 signIn();
             }
         });
-        /**
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                singOut();
-            }
-            // ..
-        });
-         **/
-
     }
 
     private FirebaseUser getLogUser(){
@@ -124,7 +95,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void startMainActivity(){
-        Intent intent = new Intent(this, Testowe.class);
+        Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 
@@ -144,8 +115,6 @@ public class SignInActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                //startMainActivity();
-
             } else {
                 // Google Sign In failed, update UI appropriately
                 // ...
@@ -171,21 +140,20 @@ public class SignInActivity extends AppCompatActivity {
         Log.d("DTAG", "firebaseAuthWithGoogle");
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                // If sign in fails, display a message to the user. If sign in succeeds
+                // the auth state listener will be notified and logic to handle the
+                // signed in user can be handled in the listener.
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "signInWithCredential", task.getException());
+                    Toast.makeText(LoginView.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package com.kakiridev.simpleenglishwords;
+package com.kakiridev.simpleenglishwords.AddNewWord;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,7 +13,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.kakiridev.simpleenglishwords.MainView;
+import com.kakiridev.simpleenglishwords.R;
+import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
 
 import java.util.HashMap;
 
@@ -119,7 +121,7 @@ public class AddWordView extends AppCompatActivity {
     }
 
     public void startMainActivity(){
-        Intent intent = new Intent(this, StartView.class);
+        Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 

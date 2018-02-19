@@ -9,7 +9,7 @@
     android:paddingLeft="40dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kakiridev.simpleenglishwords.WordListView">
+    tools:context="com.kakiridev.simpleenglishwords.ShowListWords.WordListView">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -21,6 +21,7 @@ public class Word{
     public String mNazwaPl;
     public String mNazwaEn;
     public String mCategory;
+    public String mScore;
 
     /** PARCELABLE
     public Word(Parcel in) {
@@ -44,6 +45,15 @@ public class Word{
         this.mNazwaPl = nazwaPl;
         this.mNazwaEn = nazwaEn;
         this.mCategory = category;
+    }
+
+    public Word(String id, String nazwaPl, String nazwaEn, String category, String score) {
+
+        this.mId = id;
+        this.mNazwaPl = nazwaPl;
+        this.mNazwaEn = nazwaEn;
+        this.mCategory = category;
+        this.mScore = score;
     }
 
     public String getmNazwaPl() {
@@ -76,6 +86,14 @@ public class Word{
 
     public void setmCategory(String mCategory) {
         this.mCategory = mCategory;
+    }
+
+    public String getmScore() {
+        return mScore;
+    }
+
+    public void setmScore(String mScore) {
+        this.mScore = mScore;
     }
 
 /** PARCELABLE

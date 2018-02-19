@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,38 +16,88 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
+import com.kakiridev.simpleenglishwords.KnowWords.RandW;
+import com.kakiridev.simpleenglishwords.LoginView.LoginView;
+import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
 
-public class Testowe extends AppCompatActivity {
 
-    private TextView nameTextView;
-    private TextView emailTextView;
+public class MainView extends AppCompatActivity{
+
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
+    private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private GoogleApiClient mGoogleApiClient;
-    private Button btn;
+
+    //view objects
+    private TextView textViewUserEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testowe);
+        setContentView(R.layout.activity_main_view);
 
-        Log.d("DTAG", "testowe");
         InitializeAuth();
-        Log.d("DTAG", "InitializeAuth");
         if(isLogedUser()) {
-            Log.d("DTAG", "T");
             setUserFields(getLogUser());
         }
-        Log.d("DTAG", "setUserFields");
 
-        btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button btnToListView = findViewById(R.id.btn_show_wordslist);
+        btnToListView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                singOut();
-                startLoginActivity();
+            public void onClick(View view) {
+                startActivity_WordListView();
             }
         });
+
+        Button btnAddNewWord = findViewById(R.id.btn_add_word);
+        btnAddNewWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_AddNewWord();
+            }
+        });
+
+        Button buttonLogout = findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+                startActivity_LoginView();
+            }
+        });
+
+        Button buttonRand = findViewById(R.id.randWords);
+        buttonRand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_RandW();
+            }
+        });
+
     }
+
+    public void startActivity_AddNewWord (){
+        Intent i = new Intent(this, AddWordView.class);
+        startActivity(i);
+    }
+
+    public void startActivity_WordListView (){
+        Intent i = new Intent(this, WordListView.class);
+        startActivity(i);
+    }
+
+    public void startActivity_LoginView (){
+        Intent i = new Intent(this, LoginView.class);
+        startActivity(i);
+    }
+
+    public void startActivity_RandW (){
+        Intent i = new Intent(this, RandW.class);
+        startActivity(i);
+    }
+
 
     private boolean isLogedUser(){
         boolean loged = false;
@@ -66,14 +115,8 @@ public class Testowe extends AppCompatActivity {
         return loged;
     }
 
-    public void startLoginActivity(){
-        Intent intent = new Intent(this, SignInActivity.class);
-        startActivity(intent);
-    }
-
     private void InitializeAuth(){
-        nameTextView = (TextView)findViewById(R.id.name_text_view);
-        emailTextView = (TextView)findViewById(R.id.email_text_view);
+        textViewUserEmail = (TextView)findViewById(R.id.textViewUserEmail);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -91,12 +134,13 @@ public class Testowe extends AppCompatActivity {
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
+        /**
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
             }
-        };
+        }; **/
     }
 
     private FirebaseUser getLogUser(){
@@ -106,24 +150,20 @@ public class Testowe extends AppCompatActivity {
     }
 
     private void setUserFields(FirebaseUser user){
-        Log.d("DTAG", "name " + user.getDisplayName().toString());
-        Log.d("DTAG", "mail " + user.getEmail().toString());
-        nameTextView.setText("HI " + user.getDisplayName().toString());
-        emailTextView.setText(user.getEmail().toString());
-
+        textViewUserEmail.setText("HI " + user.getDisplayName().toString());
     }
 
-    private void singOut(){
+    private void signOut(){
         FirebaseAuth.getInstance().signOut();
-        emailTextView.setText(" ".toString());
-        nameTextView.setText(" ".toString());
+        textViewUserEmail.setText(" ".toString());
 
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(Status status) {
-                emailTextView.setText(" ".toString());
-                nameTextView.setText(" ".toString());
+                textViewUserEmail.setText(" ".toString());
             }
         });
     }
+
+
 }

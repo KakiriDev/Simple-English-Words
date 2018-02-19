@@ -1,4 +1,4 @@
-package com.kakiridev.simpleenglishwords;
+package com.kakiridev.simpleenglishwords.ShowListWords;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.kakiridev.simpleenglishwords.R;
+import com.kakiridev.simpleenglishwords.Word;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

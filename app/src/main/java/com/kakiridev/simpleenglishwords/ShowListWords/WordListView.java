@@ -1,4 +1,4 @@
-package com.kakiridev.simpleenglishwords;
+package com.kakiridev.simpleenglishwords.ShowListWords;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
+import com.kakiridev.simpleenglishwords.R;
+import com.kakiridev.simpleenglishwords.Word;
 
 import java.util.ArrayList;
 
