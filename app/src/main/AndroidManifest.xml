@@ -17,13 +17,16 @@
             android:name=".AddNewWord.AddWordView"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".LoginView.LoginView">
+
+        </activity>
+        <activity android:name=".KnowWords.RandW">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".KnowWords.RandW"></activity>
     </application>
 
 </manifest>
