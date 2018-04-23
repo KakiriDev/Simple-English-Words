@@ -39,7 +39,7 @@ public class WordListView extends AppCompatActivity {
 
         Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
 
-        words = getWords();
+        words = getWords(true);
 
         adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
         listview = findViewById(R.id.listview);
@@ -100,7 +100,7 @@ public class WordListView extends AppCompatActivity {
     }
 
     // Get all words for firebase and add it to "words" list
-    private ArrayList<Word> getWords() {
+    private ArrayList<Word> getWords(final boolean isBlank) {
         Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
 
         DatabaseReference mDatabaseWords = FirebaseDatabase.getInstance().getReference().child("Words");
@@ -114,15 +114,19 @@ public class WordListView extends AppCompatActivity {
                 Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
 
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-
                     String id = dsp.child("id").getValue().toString();
                     String pl = dsp.child("nazwaPl").getValue().toString();
                     String en = dsp.child("nazwaEn").getValue().toString();
                     String category = dsp.child("category").getValue().toString();
-                    Word rekord = new Word(id, pl, en, category);
-
-                    fbWords.add(rekord);
-
+                    if (isBlank) {
+                        if(pl.equals("")){
+                            Word rekord = new Word(id, pl, en, category);
+                            fbWords.add(rekord);
+                        }
+                    } else {
+                        Word rekord = new Word(id, pl, en, category);
+                        fbWords.add(rekord);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

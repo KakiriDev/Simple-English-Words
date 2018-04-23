@@ -9,23 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.Word;
-
-import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -310,148 +302,8 @@ public class RandW extends AppCompatActivity {
         }).start(); // Start the operation
     }
 
-    //get all words from firebase
-    private ArrayList<Word> getAllWords(){
-        final ArrayList<Word> fbWords = new ArrayList<Word>();
-        DatabaseReference mDatabaseWords = FirebaseDatabase.getInstance().getReference().child("Words");
 
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                fbWords.clear();
-                String userId = getFirebaseUserId();
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    String id = dsp.child("id").getValue().toString();
-                    String pl = dsp.child("nazwaPl").getValue().toString();
-                    String en = dsp.child("nazwaEn").getValue().toString();
-                    String category = dsp.child("category").getValue().toString();
-
-                    String score = "0";
-
-                    if(checkUserKnowWord(id)){
-                        score = dsp.child(userId).child("score").getValue().toString();
-                    }
-
-                    Word rekord = new Word(id, pl, en, category, score);
-
-                    fbWords.add(rekord);
-                    Log.e("DTAG", "order 33 " + fbWords.size());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        };
-        mDatabaseWords.addValueEventListener(listener);
-       // mDatabaseWords.removeEventListener(listener);
-        return fbWords;
-    }
-
-    //get all known words from list of words (firebase -> list of words)
-    private ArrayList<Word> getAllKnownWords(){
-        final ArrayList<Word> fbWords = new ArrayList<Word>();
-        DatabaseReference mDatabaseWords = FirebaseDatabase.getInstance().getReference().child("Words");
-
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String userId = getFirebaseUserId();
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    String id = dsp.child("id").getValue().toString();
-                    String pl = dsp.child("nazwaPl").getValue().toString();
-                    String en = dsp.child("nazwaEn").getValue().toString();
-                    String category = dsp.child("category").getValue().toString();
-
-                    String score = "0";
-
-                    if(checkUserKnowWord(id)){
-                        score = dsp.child(userId).child("score").getValue().toString();
-                        Word rekord = new Word(id, pl, en, category, score);
-                        fbWords.add(rekord);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        };
-        mDatabaseWords.addValueEventListener(listener);
-        mDatabaseWords.removeEventListener(listener);
-        return fbWords;
-    }
-
-    //get number of words from
-    private int getCountOfWords(){
-        ArrayList<Word> words = listOfWords;
-        int count = words.size();
-
-        return count;
-    }
-
-    //get number of known words from
-    private int getCountOfKnownWords(){
-        ArrayList<Word> words = listOfKnownWords;
-        int count = words.size();
-        Log.e("DTAG", "count " + count);
-        return count;
-    }
-
-
-    //get average score from list of known words
-    private int getTotalScore(){
-        ArrayList<Word> knownWordsList = listOfKnownWords;
-        int score = 0;
-        for (Word word : knownWordsList) {
-            score = score + Integer.parseInt(word.getmScore());
-        }
-        Log.e("DTAG", "score " + score);
-        return score;
-    }
-
-    private long getAverageScore() {
-
-        int knownCount = getCountOfKnownWords();
-        int score = getTotalScore();
-        long average;
-        if(knownCount > 0){
-            average = score / knownCount;
-        } else {
-            average = 0;
-        }
-        Log.e("DTAG", "average " + average);
-        return average;
-    }
-
-
-
-
-/*
-    private int getScore(String word){
-        int oldScore = 0;
-        Log.e("DTAG", "order 1");
-        String userId = getFirebaseUserId();
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Words").child(word).child(userId).child("score");
-
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                oldScore = Integer.parseInt(snapshot.getValue().toString());
-                Log.e("DTAG", "order 3");
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        rootRef.addListenerForSingleValueEvent(listener);
-        rootRef.removeEventListener(listener);
-        Log.e("DTAG", "order 2");
-    return oldScore;
-    }
-*/
-
-
-
+    /** check known words and return known=true/false **/
     private boolean checkUserKnowWord(String word){
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Words").child(word);
         ValueEventListener listener = new ValueEventListener() {
@@ -474,7 +326,7 @@ public class RandW extends AppCompatActivity {
         return known;
     }
 
-    //get firebase user id
+    /** get firebase user id **/
     private String getFirebaseUserId(){
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         String uid = currentFirebaseUser.getUid().toString();

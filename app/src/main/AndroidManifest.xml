@@ -16,10 +16,10 @@
         <activity
             android:name=".AddNewWord.AddWordView"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".LoginView.LoginView">
+        <activity android:name=".KnowWords.RandW">
 
         </activity>
-        <activity android:name=".KnowWords.RandW">
+        <activity android:name=".LoginView.LoginView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
