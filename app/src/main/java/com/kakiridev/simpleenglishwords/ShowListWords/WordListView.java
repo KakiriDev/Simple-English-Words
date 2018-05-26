@@ -37,6 +37,12 @@ public class WordListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_list_view);
 
+        //back button
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
 
         words = getWords(true);
@@ -46,6 +52,19 @@ public class WordListView extends AppCompatActivity {
         listview.setAdapter(adapter);
         registerForContextMenu(listview);
         adapter.notifyDataSetChanged();
+
+    }
+
+    //back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     // Add Context Menu

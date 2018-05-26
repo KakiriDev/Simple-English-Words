@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -45,6 +46,11 @@ public class RandW extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rand_w);
 
+        //back button
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         //startLoadingDialog();
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
@@ -70,8 +76,22 @@ public class RandW extends AppCompatActivity {
         });
     }
 
+    //back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Write your logic here
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-/**
+
+
+    /**
     private void FirebaseListenert(){
         DatabaseReference mDatabaseWords = FirebaseDatabase.getInstance().getReference().child("Words");
         ChildEventListener childEventListener = new ChildEventListener() {
