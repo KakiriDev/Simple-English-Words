@@ -1,15 +1,19 @@
 package com.kakiridev.simpleenglishwords;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class FirebaseDatabase {
     long count;
     public FirebaseResponseListener listener;
-    public FirebaseResponseListener getListOfWordsListener;
-
+    public FirebaseGetAllWordsListener getListOfWordsListener;
+    ArrayList<Word> fbWords;
 
     public void getCountWordsFromFirebase() {
         DatabaseReference mDatabaseWords = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Words");
@@ -18,7 +22,7 @@ public class FirebaseDatabase {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 count = dataSnapshot.getChildrenCount();
-                listener.onFirebaseResponseReceived((int)count);
+                listener.onFirebaseResponseReceived((int) count);
             }
 
             @Override
@@ -31,12 +35,29 @@ public class FirebaseDatabase {
     public void getListOfWords() {
 
         DatabaseReference mDatabaseWords = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Words");
+
         mDatabaseWords.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                fbWords = new ArrayList<Word>();
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    String id = dsp.child("id").getValue().toString();
+                    String pl = dsp.child("nazwaPl").getValue().toString();
+                    String en = dsp.child("nazwaEn").getValue().toString();
+                    String category = dsp.child("category").getValue().toString();
 
-                count = dataSnapshot.getChildrenCount();
-                listener.onFirebaseResponseReceived((int)count);
+                    if (true) { //only blanks
+                        if(pl.equals("")){
+                            Word rekord = new Word(id, pl, en, category);
+                            fbWords.add(rekord);
+                        }
+                    } else {
+                        Word rekord = new Word(id, pl, en, category);
+                        fbWords.add(rekord);
+                    }
+
+                }
+                getListOfWordsListener.onFirebaseGetAllWordsListener(fbWords);
             }
 
             @Override
@@ -45,6 +66,6 @@ public class FirebaseDatabase {
             }
 
         });
-
     }
 }
+

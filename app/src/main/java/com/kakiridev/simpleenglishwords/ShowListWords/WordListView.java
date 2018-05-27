@@ -18,13 +18,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
+
+import com.kakiridev.simpleenglishwords.FirebaseGetAllWordsListener;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.Word;
 
 import java.util.ArrayList;
 
 
-public class WordListView extends AppCompatActivity {
+
+public class WordListView extends AppCompatActivity implements FirebaseGetAllWordsListener {
 
     private ArrayList<Word> words = new ArrayList<Word>();
     WordListViewAdapter adapter;
@@ -45,16 +48,22 @@ public class WordListView extends AppCompatActivity {
 
         Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
 
-        words = getWords(true);
+        startGetAllWordsListener();
+        //words = getWords(true);
 
-        adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
-        listview = findViewById(R.id.listview);
-        listview.setAdapter(adapter);
-        registerForContextMenu(listview);
-        adapter.notifyDataSetChanged();
+//        adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
+//        listview = findViewById(R.id.listview);
+//        listview.setAdapter(adapter);
+//        registerForContextMenu(listview);
+//        adapter.notifyDataSetChanged();
 
     }
 
+    public void startGetAllWordsListener(){
+        com.kakiridev.simpleenglishwords.FirebaseDatabase fb = new com.kakiridev.simpleenglishwords.FirebaseDatabase();
+        fb.getListOfWordsListener = this;
+        fb.getListOfWords();
+    }
     //back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,46 +127,15 @@ public class WordListView extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    // Get all words for firebase and add it to "words" list
-    private ArrayList<Word> getWords(final boolean isBlank) {
-        Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
 
-        DatabaseReference mDatabaseWords = FirebaseDatabase.getInstance().getReference().child("Words");
-        final ArrayList<Word> fbWords = new ArrayList<Word>();
-        words.clear();
-//        mDatabaseWords.addListenerForSingleValueEvent(new ValueEventListener() {
-        mDatabaseWords.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
-
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    String id = dsp.child("id").getValue().toString();
-                    String pl = dsp.child("nazwaPl").getValue().toString();
-                    String en = dsp.child("nazwaEn").getValue().toString();
-                    String category = dsp.child("category").getValue().toString();
-                    if (isBlank) {
-                        if(pl.equals("")){
-                            Word rekord = new Word(id, pl, en, category);
-                            fbWords.add(rekord);
-                        }
-                    } else {
-                        Word rekord = new Word(id, pl, en, category);
-                        fbWords.add(rekord);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
-            }
-
-        });
-
-        return fbWords;
+    @Override
+    public void onFirebaseGetAllWordsListener(ArrayList<Word> words) {
+        this.words = words;
+        adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
+        listview = findViewById(R.id.listview);
+        listview.setAdapter(adapter);
+        registerForContextMenu(listview);
+        adapter.notifyDataSetChanged();
     }
 
 
