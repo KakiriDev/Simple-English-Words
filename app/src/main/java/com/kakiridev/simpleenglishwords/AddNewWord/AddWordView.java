@@ -58,7 +58,7 @@ public class AddWordView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                newWordInDatabase();
+                checkNewWordInDatabase();
 
             }
         });
@@ -137,7 +137,7 @@ public class AddWordView extends AppCompatActivity {
         });
     }
 
-    public void newWordInDatabase() {
+    public void checkNewWordInDatabase() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         Query applesQuery = ref.child("Words");

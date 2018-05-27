@@ -17,12 +17,21 @@
         android:orientation="vertical"
         android:layout_gravity="top">
 
+
+
         <TextView
             android:id="@+id/textViewUserEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="Witaj" />
+
+        <TextView
+            android:id="@+id/words_Count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Liczba słów w bazie" />
 
         <Button
             android:id="@+id/btn_show_wordslist"

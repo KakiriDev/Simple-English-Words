@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import com.kakiridev.simpleenglishwords.LoginView.LoginView;
 import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
 
 
-public class MainView extends AppCompatActivity{
+public class MainView extends AppCompatActivity implements FirebaseResponseListener{
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -32,6 +33,7 @@ public class MainView extends AppCompatActivity{
 
     //view objects
     private TextView textViewUserEmail;
+    public TextView TV_wordsCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class MainView extends AppCompatActivity{
         if(isLogedUser()) {
             setUserFields(getLogUser());
         }
+
+        startCountWordsListener();
 
         Button btnToListView = findViewById(R.id.btn_show_wordslist);
         btnToListView.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +97,33 @@ public class MainView extends AppCompatActivity{
         startActivity(i);
     }
 
-    public void startActivity_RandW (){
-        Intent i = new Intent(this, RandW.class);
-        startActivity(i);
+    public void startCountWordsListener(){
+        FirebaseDatabase fb = new FirebaseDatabase();
+        fb.listener = this;
+        fb.getCountWordsFromFirebase();
     }
 
+    public void startActivity_RandW (){
+
+
+
+        Intent i = new Intent(this, RandW.class);
+        startActivity(i);
+
+    }
+
+    @Override
+    public void onFirebaseResponseReceived(int count) {
+        setCoutWords(count);
+    }
+
+    public void setCoutWords(long count){
+        Log.e("DTAG", "setCount0" + count);
+
+        TV_wordsCount = (TextView)findViewById(R.id.words_Count);
+        TV_wordsCount.setText(Long.toString(count));
+
+    }
 
     private boolean isLogedUser(){
         boolean loged = false;
