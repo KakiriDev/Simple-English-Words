@@ -149,8 +149,9 @@ public class MainView extends AppCompatActivity{
         return user;
     }
 
+    //show user name
     private void setUserFields(FirebaseUser user){
-        textViewUserEmail.setText("HI " + user.getDisplayName().toString());
+        textViewUserEmail.setText("Witaj " + user.getDisplayName().toString());
     }
 
     private void signOut(){
