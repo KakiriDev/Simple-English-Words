@@ -32,7 +32,7 @@ public class FirebaseDatabase {
         });
     }
 
-    public void getListOfWords() {
+    public void getListOfWords(final boolean isBlank) {
 
         DatabaseReference mDatabaseWords = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Words");
 
@@ -46,7 +46,7 @@ public class FirebaseDatabase {
                     String en = dsp.child("nazwaEn").getValue().toString();
                     String category = dsp.child("category").getValue().toString();
 
-                    if (true) { //only blanks
+                    if (isBlank) { //true only blanks
                         if(pl.equals("")){
                             Word rekord = new Word(id, pl, en, category);
                             fbWords.add(rekord);

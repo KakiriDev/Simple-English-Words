@@ -45,25 +45,15 @@ public class WordListView extends AppCompatActivity implements FirebaseGetAllWor
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-        Log.v("DTAG", "Class name: " + Thread.currentThread().getStackTrace()[2].getClassName() + " Method name: " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Words count: " + words.size());
-
         startGetAllWordsListener();
-        //words = getWords(true);
-
-//        adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
-//        listview = findViewById(R.id.listview);
-//        listview.setAdapter(adapter);
-//        registerForContextMenu(listview);
-//        adapter.notifyDataSetChanged();
-
     }
 
     public void startGetAllWordsListener(){
         com.kakiridev.simpleenglishwords.FirebaseDatabase fb = new com.kakiridev.simpleenglishwords.FirebaseDatabase();
         fb.getListOfWordsListener = this;
-        fb.getListOfWords();
+        fb.getListOfWords(true);
     }
+
     //back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
