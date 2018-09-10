@@ -20,8 +20,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.kakiridev.simpleenglishwords.FirebaseDatabase;
+import com.kakiridev.simpleenglishwords.FirebaseDatabaseUsers;
 import com.kakiridev.simpleenglishwords.MainView;
 import com.kakiridev.simpleenglishwords.R;
+import com.kakiridev.simpleenglishwords.User;
 
 
 public class LoginView extends AppCompatActivity {
@@ -60,8 +63,12 @@ public class LoginView extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(isLogedUser()) {
+
+                    //ToDo after login user
                     startMainActivity();
                     finish();
+                    FirebaseDatabaseUsers FB = new FirebaseDatabaseUsers();
+                    FB.addUserToFirebase();
                 }
             }
         };
@@ -73,6 +80,23 @@ public class LoginView extends AppCompatActivity {
             }
         });
     }
+
+
+    //get User from FB and convert it to User object
+    public User getUser(){
+
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser userFB = mAuth.getCurrentUser();
+
+        User user = new User();
+        user.setUserId(userFB.getUid());
+        user.setUserEmail(userFB.getEmail());
+        user.setUserName(userFB.getDisplayName());
+
+        return user;
+    }
+
 
     private FirebaseUser getLogUser(){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();

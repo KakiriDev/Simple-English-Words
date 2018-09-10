@@ -17,13 +17,19 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
 import com.kakiridev.simpleenglishwords.KnowWords.RandW;
 import com.kakiridev.simpleenglishwords.LoginView.LoginView;
 import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
 
+import java.util.ArrayList;
 
-public class MainView extends AppCompatActivity implements FirebaseResponseListener{
+
+public class MainView extends AppCompatActivity implements FirebaseResponseListener {
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -35,15 +41,64 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
     private TextView textViewUserEmail;
     public TextView TV_wordsCount;
 
+
+    public static ArrayList<User> userList;
+
+    public static ArrayList<Word> getAllWords(){
+        ArrayList<Word> words = new ArrayList<>();
+
+        DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userList = new ArrayList<User>();
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    if (dataSnapshot.getChildren() != null) {
+                        String taskId = dsp.getKey().toString();
+                        if (dataSnapshot.child(taskId).getChildren() != null) {
+                            User userDB = dataSnapshot.child(taskId).getValue(User.class);
+
+                            userList.add(userDB);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        return words;
+    }
+
+    public void initializeListeners(){
+
+        if(!Constatus.INITIALIZED_LISTENERS){
+        Constatus init = new Constatus();
+
+        init.getUsersListener();
+        init.getWordsListener();
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
 
+        initializeListeners();
+
         InitializeAuth();
-        if(isLogedUser()) {
+        if (isLogedUser()) {
             setUserFields(getLogUser());
         }
+
+        getAllWords();
 
         startCountWordsListener();
 
@@ -82,57 +137,62 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
     }
 
-    public void startActivity_AddNewWord (){
+    /**
+     * Start Activity
+     **/
+    public void startActivity_AddNewWord() {
         Intent i = new Intent(this, AddWordView.class);
         startActivity(i);
     }
 
-    public void startActivity_WordListView (){
+    public void startActivity_WordListView() {
         Intent i = new Intent(this, WordListView.class);
         startActivity(i);
     }
 
-    public void startActivity_LoginView (){
+    public void startActivity_LoginView() {
         Intent i = new Intent(this, LoginView.class);
         startActivity(i);
     }
 
-    public void startCountWordsListener(){
+    public void startActivity_RandW() {
+        Intent i = new Intent(this, RandW.class);
+        startActivity(i);
+    }
+
+    public void startCountWordsListener() {
         FirebaseDatabase fb = new FirebaseDatabase();
         fb.listener = this;
         fb.getCountWordsFromFirebase();
     }
 
-    public void startActivity_RandW (){
-
-
-
-        Intent i = new Intent(this, RandW.class);
-        startActivity(i);
-
-    }
 
     @Override
     public void onFirebaseResponseReceived(int count) {
         setCoutWords(count);
     }
 
-    public void setCoutWords(long count){
+    public void setCoutWords(long count) {
         Log.e("DTAG", "setCount0" + count);
 
-        TV_wordsCount = (TextView)findViewById(R.id.words_Count);
+        TV_wordsCount = (TextView) findViewById(R.id.words_Count);
         TV_wordsCount.setText(Long.toString(count));
 
     }
 
-    private boolean isLogedUser(){
+
+    /**
+     * Login and Auth
+     **/
+    //check login status
+    private boolean isLogedUser() {
         boolean loged = false;
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
-            if(user.getDisplayName() != null) {
+            if (user.getDisplayName() != null) {
                 loged = true;
             }
         } else {
@@ -141,8 +201,8 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         return loged;
     }
 
-    private void InitializeAuth(){
-        textViewUserEmail = (TextView)findViewById(R.id.textViewUserEmail);
+    private void InitializeAuth() {
+        textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -150,7 +210,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this , new GoogleApiClient.OnConnectionFailedListener() {
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -161,26 +221,24 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
         mAuth = FirebaseAuth.getInstance();
         /**
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+         mAuthListener = new FirebaseAuth.AuthStateListener() {
+        @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-            }
+        }
         }; **/
     }
 
-    private FirebaseUser getLogUser(){
+    private FirebaseUser getLogUser() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         return user;
     }
 
-    //show user name
-    private void setUserFields(FirebaseUser user){
+    private void setUserFields(FirebaseUser user) {
         textViewUserEmail.setText("Witaj " + user.getDisplayName().toString());
     }
 
-    private void signOut(){
+    private void signOut() {
         FirebaseAuth.getInstance().signOut();
         textViewUserEmail.setText(" ".toString());
 

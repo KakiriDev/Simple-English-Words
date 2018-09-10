@@ -10,14 +10,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ListView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.database.ValueEventListener;
+import com.kakiridev.simpleenglishwords.FirebaseDatabase;
+import com.kakiridev.simpleenglishwords.FirebaseDatabaseUsers;
+import com.kakiridev.simpleenglishwords.MainView;
 import com.kakiridev.simpleenglishwords.R;
+import com.kakiridev.simpleenglishwords.User;
 import com.kakiridev.simpleenglishwords.Word;
 
 import java.util.ArrayList;
@@ -45,11 +51,25 @@ public class RandW extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rand_w);
+        ArrayList<User> uL = new ArrayList<>();
+        uL = MainView.userList;
+        Log.d("users", "123");
 
+/***
         //back button
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+*
+        com.kakiridev.simpleenglishwords.FirebaseDatabase fb = new com.kakiridev.simpleenglishwords.FirebaseDatabase();
+        Boolean fbb = fb.knownListIsExist();
+        if (fbb){
+            Log.d("FBB", "1");
+        } else {
+            Log.d("FBB", "2");
+        }
+
+
 
         //startLoadingDialog();
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -58,7 +78,7 @@ public class RandW extends AppCompatActivity {
         listOfKnownWords = new ArrayList<Word>();
         listOfUnknownWords = new ArrayList<Word>();
 
-        startGetWords();
+        startGetWords();****/
 /**        FirebaseListenert();**/
 
         /**
@@ -70,10 +90,34 @@ public class RandW extends AppCompatActivity {
         buttonRand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateKnownCountStatus(averageScore, countKnownWords);
+                FirebaseDatabaseUsers fb = new FirebaseDatabaseUsers();
+               // fb.getUsersFromDB();
+
+
+
+
+
+
+
+                /**
+                Log.d("users", "1");
+                com.kakiridev.simpleenglishwords.FirebaseDatabase fb = new com.kakiridev.simpleenglishwords.FirebaseDatabase();
+                User user = fb.getFirebaseUser();
+**/
+                /**
+                boolean fbb = fb.isExistUser(user);
+
+                if (fbb){
+                    Log.d("users", "userExist");
+                } else {
+                    Log.d("users", "userDontExist");
+                }
+                 **/
+                //updateKnownCountStatus(averageScore, countKnownWords);
                 //startGetWords();
             }
         });
+
     }
 
     //back button
@@ -163,7 +207,7 @@ public class RandW extends AppCompatActivity {
 
 
 
-
+/***
     //get all words from firebase
     private void startGetWords(){
 
@@ -242,8 +286,8 @@ public class RandW extends AppCompatActivity {
         }
         //mDatabaseWords.removeEventListener(listener);
     }
-
-    /** rand words from unknonwn list and return word **/
+**/
+    /** rand words from unknonwn list and return word
     private Word randNewWords(ArrayList<Word> unknowWords){
         int count = unknowWords.size()-1;
         Random r = new Random();
@@ -256,8 +300,8 @@ public class RandW extends AppCompatActivity {
 
         return word;
     }
-
-    /** check average score>80 or count of knonw words is < 4 and add new words **/
+**/
+    /** check average score>80 or count of knonw words is < 4 and add new words
     private void updateKnownCountStatus(long averageScore, int knowCount){
         if(averageScore > 80 || knowCount < 4){
             Word word = new Word();
@@ -267,8 +311,8 @@ public class RandW extends AppCompatActivity {
             startGetWords();
         }
     }
-
-    /** add userId and score=0 to word **/
+**/
+    /** add userId and score=0 to word
     private void knowNewWord(String word){
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         String userId = getFirebaseUserId();
@@ -278,8 +322,8 @@ public class RandW extends AppCompatActivity {
 
         mDatabase.child("Words").child(word).child(userId).setValue(dataMap);
     }
-
-
+**/
+/**
     private void startLoadingDialog(){
 
         final ProgressDialog pd = new ProgressDialog(RandW.this);
@@ -321,9 +365,11 @@ public class RandW extends AppCompatActivity {
             }
         }).start(); // Start the operation
     }
-
-
+**/
+/******* SIMPLE FB **********/
     /** check known words and return known=true/false **/
+
+    /**
     private boolean checkUserKnowWord(String word){
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Words").child(word);
         ValueEventListener listener = new ValueEventListener() {
@@ -345,7 +391,7 @@ public class RandW extends AppCompatActivity {
 
         return known;
     }
-
+**/
     /** get firebase user id **/
     private String getFirebaseUserId(){
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;

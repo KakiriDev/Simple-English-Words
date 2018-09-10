@@ -31,7 +31,7 @@ public class AddWordView extends AppCompatActivity {
     EditText ET_EN;
     Boolean isEdit = false;
     String id = "";
-    Boolean status;
+    Boolean status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,8 +168,6 @@ public class AddWordView extends AppCompatActivity {
                             String en = appleSnapshot.child("nazwaEn").getValue().toString().toLowerCase();
                             if (en.equals(En)){
                                 status = false;
-                            } else {
-                                status = true;
                             }
                         }
                         if (status) {
