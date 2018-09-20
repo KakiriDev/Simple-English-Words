@@ -15,6 +15,15 @@ public class User {
         this.userEmail = userEmail;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                '}';
+    }
+
     public String getUserId() {
         return userId;
     }

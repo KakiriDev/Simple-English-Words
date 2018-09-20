@@ -1,4 +1,5 @@
 package com.kakiridev.simpleenglishwords.LoginView;
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,27 +21,36 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.kakiridev.simpleenglishwords.Constatus;
+import com.kakiridev.simpleenglishwords.DataLoading;
 import com.kakiridev.simpleenglishwords.FirebaseDatabase;
 import com.kakiridev.simpleenglishwords.FirebaseDatabaseUsers;
+import com.kakiridev.simpleenglishwords.KnownWord;
 import com.kakiridev.simpleenglishwords.MainView;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.User;
+import com.kakiridev.simpleenglishwords.Word;
 
 
 public class LoginView extends AppCompatActivity {
     private static final String TAG = "LoginView";
-    private static final int RC_SIGN_IN = 0 ;
+    private static final int RC_SIGN_IN = 0;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private com.google.android.gms.common.SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signInButton = (com.google.android.gms.common.SignInButton)findViewById(R.id.sign_in_button);
+        signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -48,7 +58,7 @@ public class LoginView extends AppCompatActivity {
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this , new GoogleApiClient.OnConnectionFailedListener() {
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -62,13 +72,9 @@ public class LoginView extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(isLogedUser()) {
+                if (isLogedUser()) {
+                    loginMethod();
 
-                    //ToDo after login user
-                    startMainActivity();
-                    finish();
-                    FirebaseDatabaseUsers FB = new FirebaseDatabaseUsers();
-                    FB.addUserToFirebase();
                 }
             }
         };
@@ -80,11 +86,23 @@ public class LoginView extends AppCompatActivity {
             }
         });
     }
+    //ToDo after login user / add user to database and start DataLoading Activity
+    public void loginMethod() {
 
+        FirebaseDatabaseUsers FB = new FirebaseDatabaseUsers();
+        FB.addUserToFirebase();
+        startDataLoadingActivity();
+
+    }
+
+    //TODO start DataLoading Activity
+    public void startDataLoadingActivity() {
+        Intent intent = new Intent(this, DataLoading.class);
+        startActivity(intent);
+    }
 
     //get User from FB and convert it to User object
-    public User getUser(){
-
+    public User getUser() {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser userFB = mAuth.getCurrentUser();
@@ -97,30 +115,20 @@ public class LoginView extends AppCompatActivity {
         return user;
     }
 
-
-    private FirebaseUser getLogUser(){
+    private boolean isLogedUser() {
+        boolean loged = false;
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        return user;
-    }
-
-    private boolean isLogedUser(){
-        boolean loged = false;
-        FirebaseUser user = getLogUser();
 
         if (user != null) {
-            if(user.getDisplayName() != null) {
+            if (user.getDisplayName() != null) {
+                Constatus.LOGGED_USER = getUser();
                 loged = true;
             }
         } else {
             loged = false;
         }
         return loged;
-    }
-
-    public void startMainActivity(){
-        Intent intent = new Intent(this, MainView.class);
-        startActivity(intent);
     }
 
     private void signIn() {
@@ -180,4 +188,5 @@ public class LoginView extends AppCompatActivity {
             }
         });
     }
+
 }

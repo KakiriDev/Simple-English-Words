@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import com.google.firebase.database.ValueEventListener;
+import com.kakiridev.simpleenglishwords.Constatus;
 import com.kakiridev.simpleenglishwords.FirebaseDatabase;
 import com.kakiridev.simpleenglishwords.FirebaseDatabaseUsers;
 import com.kakiridev.simpleenglishwords.MainView;
@@ -90,14 +91,6 @@ public class RandW extends AppCompatActivity {
         buttonRand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabaseUsers fb = new FirebaseDatabaseUsers();
-               // fb.getUsersFromDB();
-
-
-
-
-
-
 
                 /**
                 Log.d("users", "1");

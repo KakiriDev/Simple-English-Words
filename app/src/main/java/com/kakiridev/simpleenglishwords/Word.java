@@ -18,7 +18,7 @@ public class Word{
     public String nazwaPl;
     public String nazwaEn;
     public String category;
-    public String score;
+    public int score = 0;
 
     /** PARCELABLE
     public Word(Parcel in) {
@@ -44,13 +44,24 @@ public class Word{
         this.category = category;
     }
 
-    public Word(String id, String nazwaPl, String nazwaEn, String category, String score) {
+    public Word(String id, String nazwaPl, String nazwaEn, String category, int score) {
 
         this.id = id;
         this.nazwaPl = nazwaPl;
         this.nazwaEn = nazwaEn;
         this.category = category;
         this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Word{" +
+                "id='" + id + '\'' +
+                ", nazwaPl='" + nazwaPl + '\'' +
+                ", nazwaEn='" + nazwaEn + '\'' +
+                ", category='" + category + '\'' +
+                ", score='" + score + '\'' +
+                '}';
     }
 
     public String getmNazwaPl() {
@@ -85,11 +96,11 @@ public class Word{
         this.category = mCategory;
     }
 
-    public String getmScore() {
+    public int getmScore() {
         return score;
     }
 
-    public void setmScore(String mScore) {
+    public void setmScore(int mScore) {
         this.score = mScore;
     }
 

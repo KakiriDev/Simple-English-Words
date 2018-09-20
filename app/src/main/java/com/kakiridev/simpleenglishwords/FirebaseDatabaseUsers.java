@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class FirebaseDatabaseUsers {
 
+
     /***********
      ** USERS **
      ***********/
@@ -83,11 +84,12 @@ public class FirebaseDatabaseUsers {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = new User();
-                user = getFirebaseUser();
+               // User user = new User();
+              //  user = getFirebaseUser();
 
                 DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users");
-                refUser.child(user.userId.toString()).setValue(user);
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).setValue(Constatus.LOGGED_USER);
+                //Constatus.LOGGED_USER = user;
             }
 
             @Override

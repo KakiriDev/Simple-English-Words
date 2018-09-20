@@ -28,7 +28,6 @@ import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
 
 import java.util.ArrayList;
 
-
 public class MainView extends AppCompatActivity implements FirebaseResponseListener {
 
     //firebase auth object
@@ -40,7 +39,6 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
     //view objects
     private TextView textViewUserEmail;
     public TextView TV_wordsCount;
-
 
     public static ArrayList<User> userList;
 
@@ -70,29 +68,23 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
             }
         });
 
-
-
         return words;
     }
 
-    public void initializeListeners(){
 
-        if(!Constatus.INITIALIZED_LISTENERS){
-        Constatus init = new Constatus();
-
-        init.getUsersListener();
-        init.getWordsListener();
-
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
+/****/
 
-        initializeListeners();
-
+        Log.d("logii", "--------------USER_LIST--------------: " + Constatus.USER_LIST.toString());
+        Log.d("logii", "--------------KNOWN_WORD_LIST--------------: " + Constatus.KNOWN_WORD_LIST.toString());
+        Log.d("logii", "--------------UNKNOWN_WORD_LIST--------------: " + Constatus.UNKNOWN_WORD_LIST.toString());
+        Log.d("logii", "--------------WORD_LIST--------------: " + Constatus.WORD_LIST.toString());
+        Log.d("logii", "--------------LOGGED_USER--------------: " + Constatus.LOGGED_USER.toString());
+        Log.d("logii", "--------------WORD_UNCOMPLITED_LIST--------------: " + Constatus.WORD_UNCOMPLITED_LIST.toString());
         InitializeAuth();
         if (isLogedUser()) {
             setUserFields(getLogUser());
@@ -123,6 +115,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
             @Override
             public void onClick(View view) {
                 signOut();
+                Constatus.LOGGED_USER = null;
                 startActivity_LoginView();
             }
         });

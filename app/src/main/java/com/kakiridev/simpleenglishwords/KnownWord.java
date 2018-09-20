@@ -1,33 +1,33 @@
 package com.kakiridev.simpleenglishwords;
 
-public class KnownWord {
+public class KnownWord extends Word {
 
-    private String mScore;
-    private String mId;
+    private int Score;
+    private String Id;
 
     public KnownWord(){
 
     }
 
-    public KnownWord(String id, String score) {
-        this.mId = id;
-        this.mScore = score;
+    public KnownWord(String id, int score) {
+        this.Id = id;
+        this.Score = score;
     }
 
-    public String getmScore() {
-        return mScore;
+    public int getmScore() {
+        return Score;
     }
 
-    public void setmScore(String mScore) {
-        this.mScore = mScore;
+    public void setmScore(int mScore) {
+        this.Score = mScore;
     }
 
     public String getmId() {
-        return mId;
+        return Id;
     }
 
     public void setmId(String mId) {
-        this.mId = mId;
+        this.Id = mId;
     }
 
 
