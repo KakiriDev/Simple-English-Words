@@ -115,15 +115,15 @@ public class DataLoading extends AppCompatActivity {
                     }
                 }
 
-                if ((Constatus.USER_LIST.isEmpty())) {
+                if ((Constatus.WORD_LIST.isEmpty())) {
                     load2.setText("0 Words Loaded");
                 } else {
                     load2.setText(Constatus.WORD_LIST.size() + " Words Loaded");
                 }
-                if ((Constatus.USER_LIST.isEmpty())) {
+                if ((Constatus.WORD_UNCOMPLITED_LIST.isEmpty())) {
                     load3.setText("0 Uncomplited Words Loaded");
                 } else {
-                    load3.setText(Constatus.WORD_LIST.size() + " Uncomplited Words Loaded");
+                    load3.setText(Constatus.WORD_UNCOMPLITED_LIST.size() + " Uncomplited Words Loaded");
                 }
 
                 checkLoadingDataFinish("wordsLoaded");
@@ -148,25 +148,33 @@ public class DataLoading extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("Words")) {
+               // if (dataSnapshot.hasChild("Words")) {
                     // check count of unknown words and rand new words if need
-
+                    Constatus.UNKNOWN_WORD_LIST.addAll(Constatus.WORD_LIST);
 
                     // boolean containsElement = list.contains("element 1");
                     for (DataSnapshot dsp : dataSnapshot.child("Words").getChildren()) {
                         if (dataSnapshot.getChildren() != null) {
                             String taskId = dsp.getKey().toString();
                             if (dataSnapshot.child(taskId).getChildren() != null) {
-                                Word wordDB = dataSnapshot.child(taskId).getValue(KnownWord.class);
+                                Word wordDB = dataSnapshot.child("Words").child(taskId).getValue(Word.class);
                                 Constatus.KNOWN_WORD_LIST.add(wordDB);
+                               // Constatus.UNKNOWN_WORD_LIST.indexOf(wordDB.getid());
+
+                                for (int i = 0; i < Constatus.UNKNOWN_WORD_LIST.size()-1; i++) {
+                                    if (Constatus.UNKNOWN_WORD_LIST.get(i).getid().equalsIgnoreCase(wordDB.getid())) {
+                                        Constatus.UNKNOWN_WORD_LIST.remove(i);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
 
-                } else {
+               // } else {
                     //rand new unknown words
-                    Constatus.UNKNOWN_WORD_LIST.addAll(Constatus.WORD_LIST);
-                }
+               //     Constatus.UNKNOWN_WORD_LIST.addAll(Constatus.WORD_LIST);
+              //  }
 
                 if ((Constatus.KNOWN_WORD_LIST.isEmpty())) {
                     load4.setText("0 Known Words Loaded");
@@ -212,7 +220,7 @@ public class DataLoading extends AppCompatActivity {
                 Random rand = new Random();
                 int randWord = rand.nextInt(listSize);
 
-                knownWord.setid(Constatus.UNKNOWN_WORD_LIST.get(randWord).getmId());
+                knownWord.setid(Constatus.UNKNOWN_WORD_LIST.get(randWord).getid());
                 knownWord.setcategory(Constatus.UNKNOWN_WORD_LIST.get(randWord).getcategory());
                 knownWord.setnazwaEn(Constatus.UNKNOWN_WORD_LIST.get(randWord).getnazwaEn());
                 knownWord.setnazwaPl(Constatus.UNKNOWN_WORD_LIST.get(randWord).getnazwaPl());
@@ -227,7 +235,7 @@ public class DataLoading extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId()).child("Words");
-                        refUser.child(knownWord.getmId().toString()).setValue(knownWord);
+                        refUser.child(knownWord.getid().toString()).setValue(knownWord);
 
                     }
 

@@ -299,7 +299,7 @@ public class RandW extends AppCompatActivity {
         if(averageScore > 80 || knowCount < 4){
             Word word = new Word();
             word = randNewWords(listOfUnknownWords);
-            knowNewWord(word.getmId());
+            knowNewWord(word.getid());
 
             startGetWords();
         }

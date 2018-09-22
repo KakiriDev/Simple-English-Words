@@ -103,12 +103,12 @@ public class WordListView extends AppCompatActivity implements FirebaseGetAllWor
 
         if(item.getTitle()=="Edit") {
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(); //pobranie referencji do bazy
-            mDatabase.child("Words").child(word.getmId()); // zapis do bazy do childrena "grupa"
+            mDatabase.child("Words").child(word.getid()); // zapis do bazy do childrena "grupa"
 
             intent = new Intent(getApplicationContext(), AddWordView.class);
             Toast.makeText(this, "isE " + word.getnazwaPl(), Toast.LENGTH_LONG).show();
             intent.putExtra("isEdit", true);
-            intent.putExtra("id", word.getmId());
+            intent.putExtra("id", word.getid());
             intent.putExtra("nazwaPl", word.getnazwaPl());
             intent.putExtra("nazwaEn", word.getnazwaEn());
             intent.putExtra("category", word.getcategory());
@@ -117,7 +117,7 @@ public class WordListView extends AppCompatActivity implements FirebaseGetAllWor
         if(item.getTitle()=="Delete") {
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            Query applesQuery = ref.child("Words").orderByChild("id").equalTo(word.getmId());
+            Query applesQuery = ref.child("Words").orderByChild("id").equalTo(word.getid());
 
             applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

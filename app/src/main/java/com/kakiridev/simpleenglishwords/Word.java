@@ -80,7 +80,7 @@ public class Word{
         this.nazwaEn = mNazwaEn;
     }
 
-    public String getmId() {
+    public String getid() {
         return id;
     }
 
