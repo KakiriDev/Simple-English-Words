@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.Word;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WordListViewAdapter extends ArrayAdapter<Word> {
@@ -45,8 +43,8 @@ public class WordListViewAdapter extends ArrayAdapter<Word> {
         }
 
         Word rekord = getItem(position);
-        holder.tv_pl.setText(rekord.getmNazwaPl());
-        holder.tv_en.setText(rekord.getmNazwaEn());
+        holder.tv_pl.setText(rekord.getnazwaPl());
+        holder.tv_en.setText(rekord.getnazwaEn());
 
         return convertView;
     }

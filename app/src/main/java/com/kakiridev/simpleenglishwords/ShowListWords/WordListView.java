@@ -106,12 +106,12 @@ public class WordListView extends AppCompatActivity implements FirebaseGetAllWor
             mDatabase.child("Words").child(word.getmId()); // zapis do bazy do childrena "grupa"
 
             intent = new Intent(getApplicationContext(), AddWordView.class);
-            Toast.makeText(this, "isE " + word.getmNazwaPl(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "isE " + word.getnazwaPl(), Toast.LENGTH_LONG).show();
             intent.putExtra("isEdit", true);
             intent.putExtra("id", word.getmId());
-            intent.putExtra("nazwaPl", word.getmNazwaPl());
-            intent.putExtra("nazwaEn", word.getmNazwaEn());
-            intent.putExtra("category", word.getmCategory());
+            intent.putExtra("nazwaPl", word.getnazwaPl());
+            intent.putExtra("nazwaEn", word.getnazwaEn());
+            intent.putExtra("category", word.getcategory());
             startActivity(intent);
         }
         if(item.getTitle()=="Delete") {

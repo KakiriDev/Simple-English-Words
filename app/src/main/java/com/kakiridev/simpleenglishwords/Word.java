@@ -64,19 +64,19 @@ public class Word{
                 '}';
     }
 
-    public String getmNazwaPl() {
+    public String getnazwaPl() {
         return nazwaPl;
     }
 
-    public void setmNazwaPl(String mNazwaPl) {
+    public void setnazwaPl(String mNazwaPl) {
         this.nazwaPl = mNazwaPl;
     }
 
-    public String getmNazwaEn() {
+    public String getnazwaEn() {
         return nazwaEn;
     }
 
-    public void setmNazwaEn(String mNazwaEn) {
+    public void setnazwaEn(String mNazwaEn) {
         this.nazwaEn = mNazwaEn;
     }
 
@@ -84,23 +84,23 @@ public class Word{
         return id;
     }
 
-    public void setmId(String mId) {
+    public void setid(String mId) {
         this.id = mId;
     }
 
-    public String getmCategory() {
+    public String getcategory() {
         return category;
     }
 
-    public void setmCategory(String mCategory) {
+    public void setcategory(String mCategory) {
         this.category = mCategory;
     }
 
-    public int getmScore() {
+    public int getscore() {
         return score;
     }
 
-    public void setmScore(int mScore) {
+    public void setscore(int mScore) {
         this.score = mScore;
     }
 

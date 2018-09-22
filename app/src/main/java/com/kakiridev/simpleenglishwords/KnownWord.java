@@ -14,11 +14,11 @@ public class KnownWord extends Word {
         this.Score = score;
     }
 
-    public int getmScore() {
+    public int getscore() {
         return Score;
     }
 
-    public void setmScore(int mScore) {
+    public void setscore(int mScore) {
         this.Score = mScore;
     }
 
@@ -26,7 +26,7 @@ public class KnownWord extends Word {
         return Id;
     }
 
-    public void setmId(String mId) {
+    public void setid(String mId) {
         this.Id = mId;
     }
 

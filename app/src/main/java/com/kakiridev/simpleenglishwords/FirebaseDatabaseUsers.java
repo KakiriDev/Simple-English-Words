@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FirebaseDatabaseUsers {
 
@@ -88,7 +89,9 @@ public class FirebaseDatabaseUsers {
               //  user = getFirebaseUser();
 
                 DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users");
-                refUser.child(Constatus.LOGGED_USER.userId.toString()).setValue(Constatus.LOGGED_USER);
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userEmail").setValue(Constatus.LOGGED_USER.getUserEmail());
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userName").setValue(Constatus.LOGGED_USER.getUserName());
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userId").setValue(Constatus.LOGGED_USER.getUserId());
                 //Constatus.LOGGED_USER = user;
             }
 
