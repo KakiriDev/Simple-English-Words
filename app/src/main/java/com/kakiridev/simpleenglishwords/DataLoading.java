@@ -161,7 +161,7 @@ public class DataLoading extends AppCompatActivity {
                                 Constatus.KNOWN_WORD_LIST.add(wordDB);
                                // Constatus.UNKNOWN_WORD_LIST.indexOf(wordDB.getid());
 
-                                for (int i = 0; i < Constatus.UNKNOWN_WORD_LIST.size()-1; i++) {
+                                for (int i = 0; i < Constatus.UNKNOWN_WORD_LIST.size(); i++) {
                                     if (Constatus.UNKNOWN_WORD_LIST.get(i).getid().equalsIgnoreCase(wordDB.getid())) {
                                         Constatus.UNKNOWN_WORD_LIST.remove(i);
                                         break;
@@ -198,6 +198,7 @@ public class DataLoading extends AppCompatActivity {
 
     //TODO DONE load6
     public void checkFillupknownList(){
+        load6.setVisibility(View.VISIBLE);
         if ((Constatus.KNOWN_WORD_LIST.isEmpty() || Constatus.KNOWN_WORD_LIST.size() < 20)) {
             //FIRST RUN
             load6.setText("Checking New Words... ");
@@ -207,6 +208,13 @@ public class DataLoading extends AppCompatActivity {
         } else {
             load6.setText("Fillup Known List Finished... ");
         }
+
+        Log.d("logii", "--------------USER_LIST--------------: '/n'" + Constatus.USER_LIST.toString());
+        Log.d("logii", "--------------KNOWN_WORD_LIST--------------: " + Constatus.KNOWN_WORD_LIST.toString());
+        Log.d("logii", "--------------UNKNOWN_WORD_LIST--------------: " + Constatus.UNKNOWN_WORD_LIST.toString());
+        Log.d("logii", "--------------WORD_LIST--------------: " + Constatus.WORD_LIST.toString());
+        Log.d("logii", "--------------LOGGED_USER--------------: " + Constatus.LOGGED_USER.toString());
+        Log.d("logii", "--------------WORD_UNCOMPLITED_LIST--------------: " + Constatus.WORD_UNCOMPLITED_LIST.toString());
 
     }
 
@@ -250,45 +258,6 @@ public class DataLoading extends AppCompatActivity {
         }
 
     }
-
-
-
-
-    //TODO
-    public void getKnownWordsListener() {
-        Log.d("FB", "getKnownWords started");
-        DatabaseReference mDatabaseWords = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
-//        DatabaseReference mDatabaseWords = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(LOGGED_USER.getUserId());
-        mDatabaseWords.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                if (dataSnapshot.hasChild("KnownWords")) {
-                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                        if (dataSnapshot.getChildren() != null) {
-                            if (dataSnapshot.child("KnownWords").getChildren() != null) {
-                                KnownWord wordDB = dataSnapshot.child("KnownWords").getValue(KnownWord.class);
-
-                                if (wordDB.getnazwaPl().equals("")) {
-                                    Constatus.KNOWN_WORD_LIST.add(wordDB);
-                                }
-                                Constatus.WORD_LIST.add(wordDB);
-                            }
-                        }
-                    }
-                }
-                Log.d("FB", "getKnownWords finished, count of words: " + Constatus.WORD_LIST.size() + ", Uncomplited: " + Constatus.WORD_UNCOMPLITED_LIST.size());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-    }
-
 
     public void startMainActivity() {
         Intent intent = new Intent(this, MainView.class);

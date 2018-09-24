@@ -79,7 +79,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         setContentView(R.layout.activity_main_view);
 /****/
 
-        Log.d("logii", "--------------USER_LIST--------------: " + Constatus.USER_LIST.toString());
+        Log.d("logii", "--------------USER_LIST--------------: '/n'" + Constatus.USER_LIST.toString());
         Log.d("logii", "--------------KNOWN_WORD_LIST--------------: " + Constatus.KNOWN_WORD_LIST.toString());
         Log.d("logii", "--------------UNKNOWN_WORD_LIST--------------: " + Constatus.UNKNOWN_WORD_LIST.toString());
         Log.d("logii", "--------------WORD_LIST--------------: " + Constatus.WORD_LIST.toString());
