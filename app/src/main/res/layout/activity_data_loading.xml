@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark"
     android:orientation="vertical"
+    android:id="@+id/layoutClick"
     tools:context=".DataLoading">
 
     <TextView
@@ -66,5 +67,12 @@
         android:padding="8dp"
         android:text="Load6"
         android:visibility="invisible" />
-
+    <TextView
+        android:id="@+id/load7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="15dp"
+        android:text="Load7"
+        android:visibility="invisible" />
 </LinearLayout>
