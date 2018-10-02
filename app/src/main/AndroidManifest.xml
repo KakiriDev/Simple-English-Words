@@ -16,7 +16,7 @@
         <activity
             android:name=".AddNewWord.AddWordView"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".KnowWords.RandW"></activity>
+        <activity android:name=".KnowWords.RandW" />
         <activity android:name=".LoginView.LoginView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DataLoading"></activity>
+        <activity android:name=".DataLoading" />
+        <activity android:name=".RoundView"></activity>
     </application>
 
 </manifest>
