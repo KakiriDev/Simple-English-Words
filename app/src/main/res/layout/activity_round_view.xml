@@ -4,46 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".RoundView">
-
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnCount="2"
-        android:rowCount="3">
-
-
+        android:padding="10dp"
+        android:rowCount="6">
 
         <LinearLayout
             android:id="@+id/LL"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="40dp"
             android:layout_row="1"
             android:layout_rowWeight="1"
             android:layout_columnSpan="2"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="#777777"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
                 android:text="Tile1"
+                android:padding="5dp"
                 android:textSize="20sp" />
-
         </LinearLayout>
-
-
 
         <LinearLayout
             android:id="@+id/LL1"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="1"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
@@ -51,17 +57,25 @@
             <TextView
                 android:id="@+id/Tile1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
                 android:text="Tile1" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL2"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="2"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_corners"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
@@ -69,83 +83,222 @@
             <TextView
                 android:id="@+id/Tile2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
                 android:text="Tile2" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL3"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile3"
+                android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
                 android:text="Tile3" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL4"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_corners"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:padding="5dp"
                 android:text="Tile4" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL5"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile5"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
                 android:text="Tile5" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL6"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_corners"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile6"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
                 android:text="Tile6" />
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/LL7"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="2"
+
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Tile7"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Tile1" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/LL8"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="2"
+
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Tile8"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Tile1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL9"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="2"
+
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Tile9"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Tile1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL10"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="2"
+
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Tile10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Tile1" />
+
+        </LinearLayout>
     </GridLayout>
 
 </android.support.constraint.ConstraintLayout>

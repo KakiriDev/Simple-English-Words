@@ -120,6 +120,13 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
                 startActivity_RandW();
             }
         });
+        Button buttonStats = findViewById(R.id.statistic);
+        buttonStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_Statistic();
+            }
+        });
 
     }
 
@@ -143,6 +150,11 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
     public void startActivity_RandW() {
         Intent i = new Intent(this, RandW.class);
+        startActivity(i);
+    }
+
+    public void startActivity_Statistic() {
+        Intent i = new Intent(this, Statistic.class);
         startActivity(i);
     }
 

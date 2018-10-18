@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Statistic">
+
+    <TextView
+        android:id="@+id/totalWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_corners"
+        android:paddingVertical="20dp"
+        android:paddingLeft="30dp"
+        android:text="Total Words"/>
+
+    <TextView
+        android:id="@+id/knownWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_corners"
+        android:paddingVertical="20dp"
+        android:paddingLeft="30dp"
+        android:text="Known Words"/>
+
+    <TextView
+        android:id="@+id/unknownWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_corners"
+        android:paddingVertical="20dp"
+        android:paddingLeft="30dp"
+        android:text="Unknown Words"/>
+
+    <TextView
+        android:id="@+id/complitedWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_corners"
+        android:paddingVertical="20dp"
+        android:paddingLeft="30dp"
+        android:text="Complited Words"/>
+
+    <TextView
+        android:id="@+id/uncomplitedWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_corners"
+        android:paddingVertical="20dp"
+        android:paddingLeft="30dp"
+        android:text="Uncomplited Words"/>
+
+    <TextView
+        android:id="@+id/knownPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_corners"
+        android:paddingVertical="20dp"
+        android:paddingLeft="30dp"
+        android:text="Known Percent"/>
+
+</LinearLayout>

@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DataLoading" />
-        <activity android:name=".RoundView"></activity>
+        <activity android:name=".RoundView" />
+        <activity android:name=".Statistic"></activity>
     </application>
 
 </manifest>

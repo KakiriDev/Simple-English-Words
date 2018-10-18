@@ -39,13 +39,6 @@ public class RandW extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity();
-                /**
-                 ArrayList<Word> word = new ArrayList<>();
-                 word = randWords(5);
-                 setScore(word.get(0).id, getScore(word.get(0).id) + 10);
-
-                 Log.d("randomed", "score: " + getScore(word.get(0).id));
-                 **/
             }
         });
 
@@ -56,43 +49,36 @@ public class RandW extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private int getScore(String wordId) {
-        int score = 1;
-        for (Word word : Constatus.KNOWN_WORD_LIST) {
-            if (word.getid().equals(wordId)) {
-                score = word.getscore();
-            }
-        }
-        return score;
-    }
-
-    public void correctWord(String wordId) {
-        if (getScore(wordId) <= 90) {
-            setScore(wordId, getScore(wordId) + 10);
+    public void correctWord(Word wordId) {
+        int score  = wordId.getscore();
+        if (score <= 90) {
+            wordId.setscore(score + 10);
+            setScore(wordId);
         } else {
-            setScore(wordId, 100);
+            wordId.setscore(100);
+            setScore(wordId);
         }
     }
 
-    public void wrongWord(String wordId) {
-        if (getScore(wordId) > 10) {
-            setScore(wordId, getScore(wordId) + 10);
+    public void wrongWord(Word wordId) {
+        int score  = wordId.getscore();
+        if (score > 10) {
+            wordId.setscore(score - 10);
+            setScore(wordId);
         } else {
-            setScore(wordId, 0);
+            wordId.setscore(0);
+            setScore(wordId);
         }
     }
 
-    private void setScore(final String wordId, final int score) {
+    private void setScore(final Word wordId) {
 
         DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId()).child("Words");
-
-                refUser.child(wordId).child("score").setValue(score);
-
+                refUser.child(wordId.getid()).setValue(wordId);
             }
 
             @Override
@@ -100,10 +86,7 @@ public class RandW extends AppCompatActivity {
 
             }
         });
-
-
     }
-
 
     /***
      * rand words
@@ -111,22 +94,27 @@ public class RandW extends AppCompatActivity {
      * @return //list of words with known word on position 0
      */
     public ArrayList<Word> randWords(int numberOfWords) {
+        Log.e("checkErr", "randWords");
         ArrayList<Word> word = new ArrayList<Word>();
         Random wordId = new Random();
         Random percent = new Random();
         int knowSize = Constatus.KNOWN_WORD_LIST.size();
         int unknowSize = Constatus.UNKNOWN_WORD_LIST.size();
 
-        boolean isRandomed = false;
         boolean isCorrect = false;
-
+        int a = 1;
         while (word.size() < numberOfWords) {
+            Log.e("checkErr", "a=" + a);
+            a++;
 
             int randPercent = percent.nextInt(100);
             int knowId = wordId.nextInt(knowSize);
             int unknowId = wordId.nextInt(unknowSize);
+            Log.e("checkErr", "knowId: " + knowId);
             Word randKnownWord = Constatus.KNOWN_WORD_LIST.get(knowId);
+            Log.e("checkErr", "randKnownWord: " + randKnownWord.toString());
             Word randUnknownWord = Constatus.UNKNOWN_WORD_LIST.get(unknowId);
+
             if (isCorrect == false) {
                 // rand known word
                 if (randKnownWord.getscore() <= randPercent) {
@@ -135,11 +123,14 @@ public class RandW extends AppCompatActivity {
                     isCorrect = true;
                 }
             } else {
+                boolean uniq = true;
                 //rand other words
                 if (randKnownWord.getscore() <= randPercent) {
                     //word randomed correctly
-                    boolean uniq = true;
                     for (Word w : word) {
+                       // Log.e("checkErr", "randKnownWord: " + randKnownWord.toString());
+                        //Log.e("checkErr", "w: " + w.toString());
+                       // Log.e("checkErr", "word: " + word.toString());
                         if ((randKnownWord.getid()).equals(w.getid())) {
                             uniq = false;
                         }
@@ -148,7 +139,6 @@ public class RandW extends AppCompatActivity {
                         word.add(randKnownWord);
                     }
                 } else {
-                    boolean uniq = true;
                     for (Word w : word) {
                         if ((randKnownWord.getid()).equals(w.getid())) {
                             uniq = false;
@@ -157,13 +147,11 @@ public class RandW extends AppCompatActivity {
                     if (uniq){
                         word.add(randUnknownWord);
                     }
-
                 }
             }
         }
         return word;
     }
-
 
     //back button
     @Override
@@ -178,9 +166,6 @@ public class RandW extends AppCompatActivity {
         }
     }
 
-    /**
-     * get firebase user id
-     **/
     private String getFirebaseUserId() {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = currentFirebaseUser.getUid().toString();
