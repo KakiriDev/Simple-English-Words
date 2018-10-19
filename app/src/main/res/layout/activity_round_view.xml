@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/bgd2"
     tools:context=".RoundView">
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bgd2"
         android:columnCount="2"
-        android:padding="10dp"
+        android:padding="20dp"
         android:rowCount="6">
 
         <LinearLayout
@@ -24,16 +25,17 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corners"
-            android:backgroundTint="#777777"
+            android:background="@drawable/greybutton"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:maxLines="10"
                 android:text="Tile1"
                 android:padding="5dp"
@@ -49,7 +51,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
@@ -58,9 +60,11 @@
                 android:id="@+id/Tile1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:text="Tile1" />
 
@@ -75,7 +79,8 @@
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_corners"
+
+            android:background="@drawable/blackbutton"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
@@ -84,8 +89,10 @@
                 android:id="@+id/Tile2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:maxLines="10"
                 android:padding="5dp"
                 android:text="Tile2" />
@@ -100,7 +107,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
@@ -109,8 +116,10 @@
                 android:id="@+id/Tile3"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+                style="@style/ButtonText"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:maxLines="10"
                 android:padding="5dp"
                 android:text="Tile3" />
@@ -125,20 +134,22 @@
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile4"
-                android:layout_width="match_parent"
+                style="@style/ButtonText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_height="wrap_content"
                 android:maxLines="10"
                 android:padding="5dp"
-                android:text="Tile4" />
+                android:text="Tile4"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -150,20 +161,22 @@
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile5"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
+                style="@style/ButtonText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"
                 android:padding="5dp"
-                android:text="Tile5" />
+                android:text="Tile5"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -175,20 +188,22 @@
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/Tile6"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
+                style="@style/ButtonText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"
                 android:padding="5dp"
-                android:text="Tile6" />
+                android:text="Tile6"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -204,7 +219,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -212,6 +227,8 @@
                 android:id="@+id/Tile7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"
@@ -230,7 +247,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -238,6 +255,8 @@
                 android:id="@+id/Tile8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"
@@ -257,7 +276,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -265,6 +284,8 @@
                 android:id="@+id/Tile9"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"
@@ -284,7 +305,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_margin="5dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/blackbutton"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -292,6 +313,8 @@
                 android:id="@+id/Tile10"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ButtonText"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="10"

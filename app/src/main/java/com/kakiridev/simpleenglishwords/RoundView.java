@@ -1,11 +1,13 @@
 package com.kakiridev.simpleenglishwords;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ public class RoundView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_round_view);
 
         initLayout();
@@ -37,6 +40,20 @@ public class RoundView extends AppCompatActivity {
         startGame();
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, MainView.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initLayout() {
@@ -169,8 +186,8 @@ public class RoundView extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void run() {
-                lin.setBackground(getResources().getDrawable(R.drawable.rounded_corners));//save correct word
-                correctLL.setBackground(getResources().getDrawable(R.drawable.rounded_corners));
+                lin.setBackground(getResources().getDrawable(R.drawable.blackbutton));//save correct word
+                correctLL.setBackground(getResources().getDrawable(R.drawable.blackbutton));
                 startGame();
                 isAvailalble = true;
             }
@@ -184,8 +201,8 @@ public class RoundView extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void run() {
-                lin.setBackground(getResources().getDrawable(R.drawable.rounded_corners));//save correct word
-                correctLL.setBackground(getResources().getDrawable(R.drawable.rounded_corners));
+                lin.setBackground(getResources().getDrawable(R.drawable.blackbutton));//save correct word
+                correctLL.setBackground(getResources().getDrawable(R.drawable.blackbutton));
                 startGame();
                 isAvailalble = true;
             }
@@ -206,7 +223,7 @@ public class RoundView extends AppCompatActivity {
         wordList = randW.randWords(NUM_OF_WORDS);
         Log.e("checkErr", "randWords out");
         if (correctLL != null)
-            correctLL.setBackground(getResources().getDrawable(R.drawable.rounded_corners));
+            correctLL.setBackground(getResources().getDrawable(R.drawable.blackbutton));
         if (tempList.size() == 0) {
             updateGrid(wordList);
         } else {
