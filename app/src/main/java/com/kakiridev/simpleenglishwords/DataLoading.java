@@ -1,11 +1,13 @@
 package com.kakiridev.simpleenglishwords;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,14 +20,52 @@ import java.util.Random;
 public class DataLoading extends AppCompatActivity {
     TextView load1, load2, load3, load4, load5, load6, load7;
 
+    private ProgressBar progressBar;
+    private int progressStatus = 0;
+    private TextView textView;
+    private Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_loading);
-
+        progresLoading();
+        //showProgresBar();
         textViewLoading();
 
         checkLoadingDataFinish("");
+    }
+
+
+    private void progresLoading(){
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        textView = (TextView) findViewById(R.id.progress_text);
+    }
+    private void showProgresBar(){
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        textView = (TextView) findViewById(R.id.progress_text);
+        // Start long running operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while (progressStatus < 100) {
+                    progressStatus += 1;
+                    // Update the progress bar and display the
+                    //current value in the text view
+                    handler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setProgress(progressStatus);
+                            textView.setText(progressStatus+"/"+progressBar.getMax());
+                        }
+                    });
+                    try {
+                        // Sleep for 200 milliseconds.
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     public void textViewLoading(){
@@ -39,20 +79,36 @@ public class DataLoading extends AppCompatActivity {
     }
 
     public void checkLoadingDataFinish(String status) {
+        int loadingStatus;
         switch (status) {
             default:
+                loadingStatus = 20;
+                progressBar.setProgress(loadingStatus);
+                textView.setText(loadingStatus+"/"+progressBar.getMax());
                 loadUsers();
                 break; //TODO DONE
             case "usersLoaded":
+                loadingStatus = 40;
+                progressBar.setProgress(loadingStatus);
+                textView.setText(loadingStatus+"/"+progressBar.getMax());
                 loadWords();
                 break; //TODO DONE
             case "wordsLoaded":
+                loadingStatus = 60;
+                progressBar.setProgress(loadingStatus);
+                textView.setText(loadingStatus+"/"+progressBar.getMax());
                 loadKnownAndUnknownWords();
                 break;
             case "checkFillupknownList":
+                loadingStatus = 80;
+                progressBar.setProgress(loadingStatus);
+                textView.setText(loadingStatus+"/"+progressBar.getMax());
                 checkFillupknownList();
                 break;
             case "loadFinished":
+                loadingStatus = 100;
+                progressBar.setProgress(loadingStatus);
+                textView.setText(loadingStatus+"/"+progressBar.getMax());
                 addClick();
                 break;
 
@@ -277,6 +333,9 @@ public class DataLoading extends AppCompatActivity {
 
 
     public void addClick(){
+
+       // startMainActivity();
+
         LinearLayout layoutClick = findViewById(R.id.layoutClick);
         layoutClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,6 +343,7 @@ public class DataLoading extends AppCompatActivity {
                 startMainActivity();
             }
         });
+
     }
 
     public void startMainActivity() {

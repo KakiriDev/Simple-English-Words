@@ -2,23 +2,225 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/bgd2"
-    android:paddingBottom="20dp"
-    android:paddingRight="40dp"
-    android:paddingLeft="40dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bgd2"
+    android:orientation="vertical"
+    android:paddingBottom="40dp"
     tools:context="com.kakiridev.simpleenglishwords.MainView">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="6">
+
+        <LinearLayout
+            android:id="@+id/LL_logo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingBottom="20dp">
+
+                <GridLayout
+                    android:id="@+id/black_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/tab"
+                    android:columnCount="4"
+                    android:rowCount="4">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_row="0"
+                        android:layout_rowWeight="12"
+                        android:layout_column="0"
+                        android:layout_columnSpan="4" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_row="0"
+                        android:layout_rowSpan="4"
+                        android:layout_column="0"
+                        android:layout_columnWeight="3" />
+
+                    <!-- NAPISY NA TABLICY -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_row="1"
+                        android:layout_rowWeight="22"
+                        android:layout_column="1"
+                        android:layout_columnWeight="22"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/score"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+
+                            android:text="PKT: 1000"
+
+                            android:textColor="#fff"
+                            android:textSize="16sp" />
+
+
+                        <TextView
+                            android:id="@+id/hello"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+
+                            android:text="Witaj Kamil "
+
+                            android:textColor="#fff"
+                            android:textSize="16sp" />
+
+
+                        <TextView
+                            android:id="@+id/ranked"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="Pozycja w rankingu: 1"
+
+                            android:textColor="#fff"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_row="0"
+                        android:layout_rowSpan="4"
+                        android:layout_column="3"
+                        android:layout_columnWeight="3" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_row="3"
+                        android:layout_rowWeight="3"
+                        android:layout_column="0"
+                        android:layout_columnSpan="4"
+
+                        />
+                </GridLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"></FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/LL"
+            android:layout_width="10dp"
+            android:layout_height="80dp"
+            android:layout_row="2"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="60dp"
+            android:paddingBottom="15dp">
+
+            <Button
+                android:id="@+id/btn_start_round"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/greenbutton"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Start round"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL1"
+            android:layout_width="10dp"
+            android:layout_height="80dp"
+            android:layout_row="2"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="60dp"
+            android:paddingBottom="15dp">
+
+            <Button
+                android:id="@+id/btn_show_word_list"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/redbutton"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Show Words List"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL2"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_row="2"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="60dp"
+            android:paddingBottom="15dp">
+
+            <Button
+                android:id="@+id/btn_show_ranking"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/purplebutton"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Show ranking"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+    </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
         android:background="@drawable/bgd2"
-        android:orientation="vertical"
-        android:layout_gravity="top">
-
+        android:orientation="vertical">
 
 
         <TextView
@@ -35,37 +237,30 @@
             android:gravity="center_horizontal"
             android:text="Liczba słów w bazie" />
 
-        <Button
-            android:id="@+id/btn_show_wordslist"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Show Words List" />
 
         <Button
             android:id="@+id/btn_add_word"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="Add New Word" />
 
         <Button
             android:id="@+id/buttonLogout"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="Logout" />
 
         <Button
             android:id="@+id/randWords"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rand"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="Rand" />
 
         <Button
             android:id="@+id/statistic"
@@ -75,8 +270,6 @@
             android:layout_marginTop="15dp"
             android:text="Statistic" />
     </LinearLayout>
-
-
 
 
 </LinearLayout>

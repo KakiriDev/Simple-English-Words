@@ -1,12 +1,18 @@
 package com.kakiridev.simpleenglishwords;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -42,7 +48,12 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
     public static ArrayList<User> userList;
 
-    public static ArrayList<Word> getAllWords(){
+    LinearLayout anim1, anim2, anim3;
+    GridLayout black_tab;
+    Animation fromLeft1, fromLeft2, fromLeft3, fromTop;
+TextView hello, score, ranked;
+
+    public static ArrayList<Word> getAllWords() {
         ArrayList<Word> words = new ArrayList<>();
 
         DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users");
@@ -71,12 +82,46 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         return words;
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
+
+
+        fromLeft1 = AnimationUtils.loadAnimation(this, R.anim.from_left1);
+        fromLeft2 = AnimationUtils.loadAnimation(this, R.anim.from_left2);
+        fromLeft3 = AnimationUtils.loadAnimation(this, R.anim.from_left3);
+        fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top);
+
+        anim1 = findViewById(R.id.LL);
+        anim1.setAnimation(fromLeft1);
+
+        anim2 = findViewById(R.id.LL1);
+        anim2.setAnimation(fromLeft2);
+
+        anim3 = findViewById(R.id.LL2);
+        anim3.setAnimation(fromLeft3);
+
+        black_tab = findViewById(R.id.black_tab);
+        black_tab.setAnimation(fromTop);
+
+        //eraserdust +
+        //eraserregular ++
+        //grafipaint -
+        //chawp +
+        //squeaky +++
+
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.squeaky);
+        Typeface typeface1 = ResourcesCompat.getFont(this, R.font.squeaky);
+        Typeface typeface2 = ResourcesCompat.getFont(this, R.font.squeaky);
+
+        hello = findViewById(R.id.hello);
+        score = findViewById(R.id.score);
+        ranked= findViewById(R.id.ranked);
+
+        hello.setTypeface(typeface);
+        score.setTypeface(typeface1);
+        ranked.setTypeface(typeface2);
 
         InitializeAuth();
         if (isLogedUser()) {
@@ -87,7 +132,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
         startCountWordsListener();
 
-        Button btnToListView = findViewById(R.id.btn_show_wordslist);
+        Button btnToListView = findViewById(R.id.btn_show_word_list);
         btnToListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
