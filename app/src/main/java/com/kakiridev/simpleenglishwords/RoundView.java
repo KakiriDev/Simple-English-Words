@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kakiridev.simpleenglishwords.KnowWords.RandW;
 
@@ -164,12 +165,22 @@ public class RoundView extends AppCompatActivity {
         });
     }
 
+    private void checkFillupKnownWordList() {
+        if ((Constatus.KNOWN_WORD_LIST.isEmpty() || Constatus.getUncomplitedWords() < Constatus.numberOfMinWords)) {
+            int count = Constatus.numberOfMinWords - Constatus.getUncomplitedWords();
+            DataLoading dl = new DataLoading();
+            dl.randNewWords(count, false);
+
+            Toast.makeText(RoundView.this, "Poznano nowe słowo!",Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void checkWord(int position, LinearLayout lin) {
         RandW score = new RandW();
         if (arrayWords.get(position).getid().equals(correctWord.getid())) {
             score.correctWord(arrayWords.get(position));
+            checkFillupKnownWordList();
             lin.setBackground(getResources().getDrawable(R.drawable.rounded_corners_correct));
             correctWord(lin);
         } else {
@@ -188,6 +199,8 @@ public class RoundView extends AppCompatActivity {
             public void run() {
                 lin.setBackground(getResources().getDrawable(R.drawable.blackbutton));//save correct word
                 correctLL.setBackground(getResources().getDrawable(R.drawable.blackbutton));
+
+
                 startGame();
                 isAvailalble = true;
             }
@@ -203,6 +216,8 @@ public class RoundView extends AppCompatActivity {
             public void run() {
                 lin.setBackground(getResources().getDrawable(R.drawable.blackbutton));//save correct word
                 correctLL.setBackground(getResources().getDrawable(R.drawable.blackbutton));
+
+
                 startGame();
                 isAvailalble = true;
             }
