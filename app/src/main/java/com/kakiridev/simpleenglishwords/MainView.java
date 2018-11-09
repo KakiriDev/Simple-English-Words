@@ -22,12 +22,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
 import com.kakiridev.simpleenglishwords.KnowWords.RandW;
 import com.kakiridev.simpleenglishwords.LoginView.LoginView;
 import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
@@ -50,43 +48,67 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
     LinearLayout anim1, anim2, anim3;
     GridLayout black_tab;
-    Animation fromLeft1, fromLeft2, fromLeft3, fromTop;
-TextView hello, score, ranked;
+    Animation fromLeft1, fromLeft2, fromLeft3, fromTop, toolbar;
+    TextView hello, score, ranked;
 
-    public static ArrayList<Word> getAllWords() {
-        ArrayList<Word> words = new ArrayList<>();
 
-        DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                userList = new ArrayList<User>();
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    if (dataSnapshot.getChildren() != null) {
-                        String taskId = dsp.getKey().toString();
-                        if (dataSnapshot.child(taskId).getChildren() != null) {
-                            User userDB = dataSnapshot.child(taskId).getValue(User.class);
-
-                            userList.add(userDB);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return words;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
 
+        startAnim();
+
+        InitializeAuth();
+
+        startCountWordsListener();
+        initializeButtons();
+
+    }
+
+    private void initializeButtons(){
+        /** start game **/
+        Button btnToListView = findViewById(R.id.btn_start_round);
+        btnToListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_RoundView();
+            }
+        });
+
+        /** TODO logout **/
+        Button buttonLogout = findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+                Constatus.LOGGED_USER = null;
+                startActivity_LoginView();
+            }
+        });
+
+        /** word list **/
+        Button buttonRand = findViewById(R.id.btn_show_word_list);
+        buttonRand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_WordListView();
+            }
+        });
+
+        /** statistic **/
+        Button buttonStats = findViewById(R.id.btn_show_ranking);
+        buttonStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_Statistic();
+            }
+        });
+
+    }
+
+    private void startAnim(){
 
         fromLeft1 = AnimationUtils.loadAnimation(this, R.anim.from_left1);
         fromLeft2 = AnimationUtils.loadAnimation(this, R.anim.from_left2);
@@ -105,6 +127,7 @@ TextView hello, score, ranked;
         black_tab = findViewById(R.id.black_tab);
         black_tab.setAnimation(fromTop);
 
+
         //eraserdust +
         //eraserregular ++
         //grafipaint -
@@ -122,66 +145,13 @@ TextView hello, score, ranked;
         hello.setTypeface(typeface);
         score.setTypeface(typeface1);
         ranked.setTypeface(typeface2);
-
-        InitializeAuth();
-        if (isLogedUser()) {
-            setUserFields(getLogUser());
-        }
-
-        getAllWords();
-
-        startCountWordsListener();
-
-        Button btnToListView = findViewById(R.id.btn_show_word_list);
-        btnToListView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity_WordListView();
-            }
-        });
-
-        Button btnAddNewWord = findViewById(R.id.btn_add_word);
-        btnAddNewWord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity_AddNewWord();
-            }
-        });
-
-        Button buttonLogout = findViewById(R.id.buttonLogout);
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-                Constatus.LOGGED_USER = null;
-                startActivity_LoginView();
-            }
-        });
-
-        Button buttonRand = findViewById(R.id.randWords);
-        buttonRand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity_RandW();
-            }
-        });
-        Button buttonStats = findViewById(R.id.statistic);
-        buttonStats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity_Statistic();
-            }
-        });
-
     }
 
-    /**
-     * Start Activity
-     **/
-    public void startActivity_AddNewWord() {
-        Intent i = new Intent(this, AddWordView.class);
+    public void startActivity_RoundView() {
+        Intent i = new Intent(this, RoundView.class);
         startActivity(i);
     }
+
 
     public void startActivity_WordListView() {
         Intent i = new Intent(this, WordListView.class);
@@ -193,14 +163,9 @@ TextView hello, score, ranked;
         startActivity(i);
     }
 
-    public void startActivity_RandW() {
-        Intent i = new Intent(this, RandW.class);
-        startActivity(i);
-    }
-
     public void startActivity_Statistic() {
-        Intent i = new Intent(this, Statistic.class);
-        startActivity(i);
+            Intent i = new Intent(this, Statistic.class);
+            startActivity(i);
     }
 
     public void startCountWordsListener() {
@@ -208,6 +173,7 @@ TextView hello, score, ranked;
         fb.listener = this;
         fb.getCountWordsFromFirebase();
     }
+
 
 
     @Override
@@ -221,27 +187,6 @@ TextView hello, score, ranked;
         TV_wordsCount = (TextView) findViewById(R.id.words_Count);
         TV_wordsCount.setText(Long.toString(count));
 
-    }
-
-
-    /**
-     * Login and Auth
-     **/
-    //check login status
-    private boolean isLogedUser() {
-        boolean loged = false;
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user != null) {
-            if (user.getDisplayName() != null) {
-                loged = true;
-            }
-        } else {
-            loged = false;
-        }
-        return loged;
     }
 
     private void InitializeAuth() {
@@ -269,16 +214,6 @@ TextView hello, score, ranked;
 
         }
         }; **/
-    }
-
-    private FirebaseUser getLogUser() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        return user;
-    }
-
-    private void setUserFields(FirebaseUser user) {
-        textViewUserEmail.setText("Witaj " + user.getDisplayName().toString());
     }
 
     private void signOut() {

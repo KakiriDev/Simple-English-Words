@@ -1,14 +1,19 @@
 package com.kakiridev.simpleenglishwords;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,23 +30,62 @@ import java.util.TimerTask;
 public class RoundView extends AppCompatActivity {
     LinearLayout LL, LL1, LL2, LL3, LL4, LL5, LL6, LL7, LL8, LL9, LL10;
     TextView Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10;
+    TextView hello, score;
     ArrayList<Word> arrayWords;
     Word correctWord;
     LinearLayout correctLL;
     boolean isAvailalble = true;
 
+    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_round_view);
 
+        setToolbarText();
         initLayout();
         initOnClickListener();
         startGame();
 
-
     }
+
+    private void setToolbarText(){
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.squeaky);
+
+        hello = findViewById(R.id.tv_tab_witaj);
+        score = findViewById(R.id.tv_tab_pkt);
+
+        hello.setTypeface(typeface);
+        score.setTypeface(typeface);
+    }
+
+    private void setToolbar(){
+        //make translucent statusBar on kitkat devices
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        //make fully Android Transparent Status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

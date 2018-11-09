@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="8dp"
-        android:text="Load1"
+        android:text="Load Users"
         android:visibility="invisible" />
     <TextView
         android:id="@+id/load2"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="8dp"
-        android:text="Load2"
+        android:text="Load  Words"
         android:visibility="invisible" />
     <TextView
         android:id="@+id/load3"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="8dp"
-        android:text="Load3"
+        android:text="Load Known and Unknown"
         android:visibility="invisible" />
     <TextView
         android:id="@+id/load4"

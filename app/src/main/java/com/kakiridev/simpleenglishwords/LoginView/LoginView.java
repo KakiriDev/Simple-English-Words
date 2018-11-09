@@ -27,13 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.kakiridev.simpleenglishwords.Constatus;
 import com.kakiridev.simpleenglishwords.DataLoading;
-import com.kakiridev.simpleenglishwords.FirebaseDatabase;
-import com.kakiridev.simpleenglishwords.FirebaseDatabaseUsers;
-import com.kakiridev.simpleenglishwords.KnownWord;
-import com.kakiridev.simpleenglishwords.MainView;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.User;
-import com.kakiridev.simpleenglishwords.Word;
 
 
 public class LoginView extends AppCompatActivity {
@@ -86,35 +81,8 @@ public class LoginView extends AppCompatActivity {
             }
         });
     }
-    //ToDo after login user / add user to database and start DataLoading Activity
-    public void loginMethod() {
 
-        FirebaseDatabaseUsers FB = new FirebaseDatabaseUsers();
-        FB.addUserToFirebase();
-        startDataLoadingActivity();
-
-    }
-
-    //TODO start DataLoading Activity
-    public void startDataLoadingActivity() {
-        Intent intent = new Intent(this, DataLoading.class);
-        startActivity(intent);
-    }
-
-    //get User from FB and convert it to User object
-    public User getUser() {
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser userFB = mAuth.getCurrentUser();
-
-        User user = new User();
-        user.setUserId(userFB.getUid());
-        user.setUserEmail(userFB.getEmail());
-        user.setUserName(userFB.getDisplayName());
-
-        return user;
-    }
-
+    //TODO if loged return true, if !loged login user and add user to Constatus
     private boolean isLogedUser() {
         boolean loged = false;
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -129,6 +97,53 @@ public class LoginView extends AppCompatActivity {
             loged = false;
         }
         return loged;
+    }
+
+    //TODO after login user / add user to database and start DataLoading Activity
+    public void loginMethod() {
+
+        addUserToFirebase();
+        startDataLoadingActivity();
+
+    }
+
+    private void addUserToFirebase() {
+
+        DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users");
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userEmail").setValue(Constatus.LOGGED_USER.getUserEmail());
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userName").setValue(Constatus.LOGGED_USER.getUserName());
+                refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userId").setValue(Constatus.LOGGED_USER.getUserId());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //TODO start DataLoading Activity
+    public void startDataLoadingActivity() {
+        Intent intent = new Intent(this, DataLoading.class);
+        startActivity(intent);
+    }
+
+    //TODO get User from FB and convert it to User object
+    public User getUser() {
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser userFB = mAuth.getCurrentUser();
+
+        User user = new User();
+        user.setUserId(userFB.getUid());
+        user.setUserEmail(userFB.getEmail());
+        user.setUserName(userFB.getDisplayName());
+
+        return user;
     }
 
     private void signIn() {

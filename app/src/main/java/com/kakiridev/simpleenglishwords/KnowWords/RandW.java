@@ -1,5 +1,7 @@
 package com.kakiridev.simpleenglishwords.KnowWords;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import com.google.firebase.database.ValueEventListener;
 import com.kakiridev.simpleenglishwords.Constatus;
+import com.kakiridev.simpleenglishwords.DataLoading;
 import com.kakiridev.simpleenglishwords.MainView;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.RoundView;
@@ -24,7 +28,7 @@ import com.kakiridev.simpleenglishwords.Word;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RandW extends AppCompatActivity {
+public class RandW extends Activity {
 
 
     @Override
@@ -48,6 +52,9 @@ public class RandW extends AppCompatActivity {
         Intent intent = new Intent(this, RoundView.class);
         startActivity(intent);
     }
+
+
+
 
     public void correctWord(Word wordId) {
         int score  = wordId.getscore();

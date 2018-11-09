@@ -52,8 +52,6 @@ public class Statistic extends AppCompatActivity {
         totalWords.setText("Total Words: " + Constatus.WORD_LIST.size());
         knownWords.setText("Known Words: " + Constatus.KNOWN_WORD_LIST.size());
         unknownWords.setText("Unknown Words: " + Constatus.UNKNOWN_WORD_LIST.size());
-        complitedWords.setText("Complited Words: " + Constatus.WORD_COMPLITED_LIST.size());
-        uncomplitedWords.setText("Uncomplited Words: " + Constatus.UNKNOWN_WORD_LIST.size());
         knownPercent.setText("Known Percent: " + Double.valueOf(getTotalScore()).toString());
         }
 

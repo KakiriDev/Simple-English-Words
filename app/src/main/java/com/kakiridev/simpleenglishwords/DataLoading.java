@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Random;
 
 public class DataLoading extends AppCompatActivity {
-    TextView load1, load2, load3, load4, load5, load6, load7;
+    TextView load1, load2, load3, load4, load5;
 
     private ProgressBar progressBar;
     private int progressStatus = 0;
@@ -29,91 +29,57 @@ public class DataLoading extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_loading);
+
         progresLoading();
-        //showProgresBar();
         textViewLoading();
 
         checkLoadingDataFinish("");
     }
 
-
-    private void progresLoading(){
+    private void progresLoading() {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         textView = (TextView) findViewById(R.id.progress_text);
     }
-    private void showProgresBar(){
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        textView = (TextView) findViewById(R.id.progress_text);
-        // Start long running operation in a background thread
-        new Thread(new Runnable() {
-            public void run() {
-                while (progressStatus < 100) {
-                    progressStatus += 1;
-                    // Update the progress bar and display the
-                    //current value in the text view
-                    handler.post(new Runnable() {
-                        public void run() {
-                            progressBar.setProgress(progressStatus);
-                            textView.setText(progressStatus+"/"+progressBar.getMax());
-                        }
-                    });
-                    try {
-                        // Sleep for 200 milliseconds.
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+
+    private void updateLoadingStatus(int status) {
+        progressBar.setProgress(status);
+        textView.setText(status + "/" + progressBar.getMax());
     }
 
-    public void textViewLoading(){
+    public void textViewLoading() {
         load1 = findViewById(R.id.load1);
         load2 = findViewById(R.id.load2);
         load3 = findViewById(R.id.load3);
         load4 = findViewById(R.id.load4);
         load5 = findViewById(R.id.load5);
-        load6 = findViewById(R.id.load6);
-        load7 = findViewById(R.id.load7);
     }
 
     public void checkLoadingDataFinish(String status) {
-        int loadingStatus;
         switch (status) {
             default:
-                loadingStatus = 20;
-                progressBar.setProgress(loadingStatus);
-                textView.setText(loadingStatus+"/"+progressBar.getMax());
+                updateLoadingStatus(0);
                 loadUsers();
-                break; //TODO DONE
+                break;
             case "usersLoaded":
-                loadingStatus = 40;
-                progressBar.setProgress(loadingStatus);
-                textView.setText(loadingStatus+"/"+progressBar.getMax());
+                updateLoadingStatus(25);
                 loadWords();
-                break; //TODO DONE
+                break;
             case "wordsLoaded":
-                loadingStatus = 60;
-                progressBar.setProgress(loadingStatus);
-                textView.setText(loadingStatus+"/"+progressBar.getMax());
+                updateLoadingStatus(50);
                 loadKnownAndUnknownWords();
                 break;
             case "checkFillupknownList":
-                loadingStatus = 80;
-                progressBar.setProgress(loadingStatus);
-                textView.setText(loadingStatus+"/"+progressBar.getMax());
+                updateLoadingStatus(75);
                 checkFillupknownList();
                 break;
             case "loadFinished":
-                loadingStatus = 100;
-                progressBar.setProgress(loadingStatus);
-                textView.setText(loadingStatus+"/"+progressBar.getMax());
+                updateLoadingStatus(100);
                 addClick();
                 break;
 
         }
     }
+
 
     //TODO DONE load1
     public void loadUsers() {
@@ -134,11 +100,8 @@ public class DataLoading extends AppCompatActivity {
                     }
                 }
 
-                if ((Constatus.USER_LIST.isEmpty())) {
-                    load1.setText("0 Users Loaded");
-                } else {
-                    load1.setText(Constatus.USER_LIST.size() + " Users Loaded");
-                }
+                load1.setText("Users Loaded");
+
                 checkLoadingDataFinish("usersLoaded");
 
             }
@@ -150,14 +113,10 @@ public class DataLoading extends AppCompatActivity {
         });
     }
 
-    //TODO DONE load2, load3, load4
+    //TODO DONE load2
     public void loadWords() {
         load2.setText("Words Loading...");
-        load3.setText("Uncomplited Words Loading...");
-        load4.setText("Complited Words Loading...");
         load2.setVisibility(View.VISIBLE);
-        load3.setVisibility(View.VISIBLE);
-        load4.setVisibility(View.VISIBLE);
 
         DatabaseReference mDatabaseWords = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Words");
         mDatabaseWords.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,31 +128,11 @@ public class DataLoading extends AppCompatActivity {
                         if (dataSnapshot.child(taskId).getChildren() != null) {
                             Word wordDB = dataSnapshot.child(taskId).getValue(Word.class);
 
-                            if (wordDB.getnazwaPl().equals("")) {
-                                Constatus.WORD_UNCOMPLITED_LIST.add(wordDB);
-                            } else {
-                                Constatus.WORD_COMPLITED_LIST.add(wordDB);
-                            }
                             Constatus.WORD_LIST.add(wordDB);
                         }
                     }
                 }
-
-                if ((Constatus.WORD_LIST.isEmpty())) {
-                    load2.setText("0 Words Loaded");
-                } else {
-                    load2.setText(Constatus.WORD_LIST.size() + " Words Loaded");
-                }
-                if ((Constatus.WORD_UNCOMPLITED_LIST.isEmpty())) {
-                    load3.setText("0 Uncomplited Words Loaded");
-                } else {
-                    load3.setText(Constatus.WORD_UNCOMPLITED_LIST.size() + " Uncomplited Words Loaded");
-                }
-                if ((Constatus.WORD_COMPLITED_LIST.isEmpty())) {
-                    load4.setText("0 Complited Words Loaded");
-                } else {
-                    load4.setText(Constatus.WORD_COMPLITED_LIST.size() + " Complited Words Loaded");
-                }
+                load2.setText("Words Loaded");
 
                 checkLoadingDataFinish("wordsLoaded");
             }
@@ -206,44 +145,38 @@ public class DataLoading extends AppCompatActivity {
         });
     }
 
-    //TODO DONE load5, load6
+    //TODO DONE load3
     public void loadKnownAndUnknownWords() {
-        load5.setText("Known Words Loading...");
-        load6.setText("Unknown Words Loading...");
-        load5.setVisibility(View.VISIBLE);
-        load6.setVisibility(View.VISIBLE);
+        load3.setText("Known and Unknown Words Loading...");
+        load3.setVisibility(View.VISIBLE);
 
         DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               // if (dataSnapshot.hasChild("Words")) {
-                    // check count of unknown words and rand new words if need
-                    Constatus.UNKNOWN_WORD_LIST.addAll(Constatus.WORD_COMPLITED_LIST);
+                // if (dataSnapshot.hasChild("Words")) {
+                // check count of unknown words and rand new words if need
+                Constatus.UNKNOWN_WORD_LIST.addAll(Constatus.WORD_LIST);
 
-                    // boolean containsElement = list.contains("element 1");
-                    for (DataSnapshot dsp : dataSnapshot.child("Words").getChildren()) {
-                        if (dataSnapshot.getChildren() != null) {
-                            String taskId = dsp.getKey().toString();
-                            if (dataSnapshot.child(taskId).getChildren() != null) {
-                                Word wordDB = dataSnapshot.child("Words").child(taskId).getValue(Word.class);
-                                Constatus.KNOWN_WORD_LIST.add(wordDB);
-                               // Constatus.UNKNOWN_WORD_LIST.indexOf(wordDB.getid());
+                // boolean containsElement = list.contains("element 1");
+                for (DataSnapshot dsp : dataSnapshot.child("Words").getChildren()) {
+                    if (dataSnapshot.getChildren() != null) {
+                        String taskId = dsp.getKey().toString();
+                        if (dataSnapshot.child(taskId).getChildren() != null) {
+                            Word wordDB = dataSnapshot.child("Words").child(taskId).getValue(Word.class);
+                            Constatus.KNOWN_WORD_LIST.add(wordDB);
+                            // Constatus.UNKNOWN_WORD_LIST.indexOf(wordDB.getid());
 
-                                for (int i = 0; i < Constatus.UNKNOWN_WORD_LIST.size(); i++) {
-                                    if (Constatus.UNKNOWN_WORD_LIST.get(i).getid().equalsIgnoreCase(wordDB.getid())) {
-                                        Constatus.UNKNOWN_WORD_LIST.remove(i);
-                                        break;
-                                    }
+                            for (int i = 0; i < Constatus.UNKNOWN_WORD_LIST.size(); i++) {
+                                if (Constatus.UNKNOWN_WORD_LIST.get(i).getid().equalsIgnoreCase(wordDB.getid())) {
+                                    Constatus.UNKNOWN_WORD_LIST.remove(i);
+                                    break;
                                 }
                             }
                         }
                     }
-
-                if ((Constatus.KNOWN_WORD_LIST.isEmpty())) {load5.setText("0 Known Words Loaded");} else {
-                    load5.setText(Constatus.KNOWN_WORD_LIST.size() + " Known Words Loaded");}
-                if ((Constatus.UNKNOWN_WORD_LIST.isEmpty())) {load6.setText("0 Unknown Words Loaded");} else {
-                    load6.setText(Constatus.UNKNOWN_WORD_LIST.size() + " Unknown Words Loaded");}
+                }
+                load3.setText("Known and Unknown Words Loaded");
 
                 checkLoadingDataFinish("checkFillupknownList");
             }
@@ -255,44 +188,28 @@ public class DataLoading extends AppCompatActivity {
         });
     }
 
-    //TODO DONE load7
-    public void checkFillupknownList(){
-        load7.setVisibility(View.VISIBLE);
-        if ((Constatus.KNOWN_WORD_LIST.isEmpty() || Constatus.KNOWN_WORD_LIST.size() < 10)) {
+    //TODO DONE load4 load 5
+    public void checkFillupknownList() {
+        load4.setVisibility(View.VISIBLE);
+        load4.setText("Checking New Words... ");
+        if ((Constatus.KNOWN_WORD_LIST.isEmpty() || Constatus.getUncomplitedWords() < Constatus.numberOfMinWords)) {
             //FIRST RUN
-            load7.setText("Checking New Words... ");
 
-            int count = 10 - Constatus.KNOWN_WORD_LIST.size();
-            randNewWords(count);
+
+            int count = Constatus.numberOfMinWords - Constatus.getUncomplitedWords();
+            randNewWords(count, true);
         } else {
+            load4.setText("New Words Loaded");
 
-            if ((Constatus.KNOWN_WORD_LIST.isEmpty())) {
-                load5.setText("0 Known Words Loaded");
-            } else {
-                load5.setText(Constatus.KNOWN_WORD_LIST.size() + " Known Words Loaded");
-            }
-            if ((Constatus.UNKNOWN_WORD_LIST.isEmpty())) {
-                load6.setText("0 Unknown Words Loaded");
-            } else {
-                load6.setText(Constatus.UNKNOWN_WORD_LIST.size() + " Unknown Words Loaded");
-            }
-
-        load7.setText("CLICK TO START!");
-
-            Log.d("logii", "--------------USER_LIST--------------: '/n'" + Constatus.USER_LIST.toString());
-            Log.d("logii", "--------------WORD_LIST--------------: " + Constatus.WORD_LIST.toString());
-            Log.d("logii", "--------------LOGGED_USER--------------: " + Constatus.LOGGED_USER.toString());
-            Log.d("logii", "--------------WORD_UNCOMPLITED_LIST--------------: " + Constatus.WORD_UNCOMPLITED_LIST.toString());
-            Log.d("logii", "--------------WORD_COMPLITED_LIST--------------: " + Constatus.WORD_COMPLITED_LIST.toString());
-            Log.d("logii", "--------------KNOWN_WORD_LIST--------------: " + Constatus.KNOWN_WORD_LIST.toString());
-            Log.d("logii", "--------------UNKNOWN_WORD_LIST--------------: " + Constatus.UNKNOWN_WORD_LIST.toString());
+            load5.setVisibility(View.VISIBLE);
+            load5.setText("CLICK TO START!");
 
             checkLoadingDataFinish("loadFinished");
         }
     }
 
     //TODO
-    public void randNewWords(int count) {
+    public void randNewWords(int count, boolean isDataLoading) {
 
         if (Constatus.UNKNOWN_WORD_LIST.size() > 0) {
             for (int i = 0; i < count; i++) {
@@ -327,14 +244,16 @@ public class DataLoading extends AppCompatActivity {
                 });
 
             }
-            checkLoadingDataFinish("checkFillupknownList");
+            if(isDataLoading) {
+                checkLoadingDataFinish("checkFillupknownList");
+            }
         }
     }
 
 
-    public void addClick(){
+    public void addClick() {
 
-       // startMainActivity();
+        // startMainActivity();
 
         LinearLayout layoutClick = findViewById(R.id.layoutClick);
         layoutClick.setOnClickListener(new View.OnClickListener() {

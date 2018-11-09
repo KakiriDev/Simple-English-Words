@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.kakiridev.simpleenglishwords.AddNewWord.AddWordView;
 
 import com.kakiridev.simpleenglishwords.FirebaseGetAllWordsListener;
 import com.kakiridev.simpleenglishwords.R;
@@ -87,57 +86,6 @@ public class WordListView extends AppCompatActivity implements FirebaseGetAllWor
         }
     }
 
-    // Add Context Menu
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-        menu.add(0, v.getId(), 0, "Edit");
-        menu.add(0, v.getId(), 0, "Delete");
-    }
-
-
-    /** wykonuje się po wybraniu opcji z menu knteksowego **/
-    public boolean onContextItemSelected(MenuItem item){
-        AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        long selectid = menuinfo.id; //_id from database in this case
-        int selectpos = menuinfo.position; //position in the adapter
-        word = words.get(selectpos); // wskazany task
-
-        if(item.getTitle()=="Edit") {
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(); //pobranie referencji do bazy
-            mDatabase.child("Words").child(word.getid()); // zapis do bazy do childrena "grupa"
-
-            intent = new Intent(getApplicationContext(), AddWordView.class);
-            Toast.makeText(this, "isE " + word.getnazwaPl(), Toast.LENGTH_LONG).show();
-            intent.putExtra("isEdit", true);
-            intent.putExtra("id", word.getid());
-            intent.putExtra("nazwaPl", word.getnazwaPl());
-            intent.putExtra("nazwaEn", word.getnazwaEn());
-            intent.putExtra("category", word.getcategory());
-            startActivity(intent);
-        }
-        if(item.getTitle()=="Delete") {
-
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            Query applesQuery = ref.child("Words").orderByChild("id").equalTo(word.getid());
-
-            applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                        appleSnapshot.getRef().removeValue();
-                        words.clear();
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.e("DTAG", "onCancelled", databaseError.toException());
-                }
-            });
-        }
-        return super.onContextItemSelected(item);
-    }
-
 
     @Override
     public void onFirebaseGetAllWordsListener(ArrayList<Word> words) {
@@ -145,7 +93,7 @@ public class WordListView extends AppCompatActivity implements FirebaseGetAllWor
         adapter = new WordListViewAdapter(this, R.layout.word_listview_row,words);
         listview = findViewById(R.id.listview);
         listview.setAdapter(adapter);
-        registerForContextMenu(listview);
+
         adapter.notifyDataSetChanged();
     }
 
