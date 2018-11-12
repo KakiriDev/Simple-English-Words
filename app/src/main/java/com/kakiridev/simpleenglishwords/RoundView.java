@@ -18,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.kakiridev.simpleenglishwords.KnowWords.RandW;
 
 import java.lang.reflect.Array;
@@ -34,6 +37,8 @@ public class RoundView extends AppCompatActivity {
     ArrayList<Word> arrayWords;
     Word correctWord;
     LinearLayout correctLL;
+    private static final String TAG = "MainActivity";
+    private AdView mAdView;
     boolean isAvailalble = true;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
@@ -54,11 +59,18 @@ public class RoundView extends AppCompatActivity {
        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_round_view);
 
+        addAdMob();
         setToolbarText();
         initLayout();
         initOnClickListener();
         startGame();
 
+    }
+
+    private void addAdMob(){
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void setToolbarText(){
