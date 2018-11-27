@@ -17,14 +17,18 @@
             android:value="ca-app-pub-8343407965657663~4839584987"/>
 
         <activity android:name=".MainView"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ShowListWords.WordListView" />
+        <activity android:name=".ShowListWords.WordListView"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".KnowWords.RandW"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".LoginView.LoginView">
+        <activity android:name=".LoginView.LoginView"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,13 +37,16 @@
         </activity>
 
         <activity android:name=".DataLoading"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".RoundView"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".Statistic"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
     </application>
 
