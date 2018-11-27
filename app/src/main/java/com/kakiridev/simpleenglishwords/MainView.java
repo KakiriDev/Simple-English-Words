@@ -178,6 +178,8 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         fb.getCountWordsFromFirebase();
     }
 
+    @Override
+    public void onBackPressed() { }
 
 
     @Override

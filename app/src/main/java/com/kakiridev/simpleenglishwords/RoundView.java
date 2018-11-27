@@ -235,6 +235,9 @@ public class RoundView extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+    
+    @Override
+    public void onBackPressed() { }
 
     private void checkFillupKnownWordList() {
         if ((Constatus.KNOWN_WORD_LIST.isEmpty() || Constatus.getUncomplitedWords() < Constatus.numberOfMinWords)) {

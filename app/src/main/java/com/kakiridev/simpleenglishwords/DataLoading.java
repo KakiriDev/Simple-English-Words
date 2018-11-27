@@ -30,11 +30,14 @@ public class DataLoading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_loading);
 
+
         progresLoading();
         textViewLoading();
 
         checkLoadingDataFinish("");
     }
+    @Override
+    public void onBackPressed() { }
 
     private void progresLoading() {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
