@@ -268,6 +268,7 @@ public class DataLoading extends AppCompatActivity {
     public void startMainActivity() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
+        finish();
     }
 
 
