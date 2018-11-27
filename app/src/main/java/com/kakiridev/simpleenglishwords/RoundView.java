@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class RoundView extends AppCompatActivity {
     LinearLayout LL, LL1, LL2, LL3, LL4, LL5, LL6, LL7, LL8, LL9, LL10;
     TextView Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10;
     TextView hello, score;
+    ImageView IV_back_to_main;
     ArrayList<Word> arrayWords;
     Word correctWord;
     LinearLayout correctLL;
@@ -136,6 +138,8 @@ public class RoundView extends AppCompatActivity {
         Text9 = findViewById(R.id.Tile9);
         LL10 = findViewById(R.id.LL10);
         Text10 = findViewById(R.id.Tile10);
+
+        IV_back_to_main = findViewById(R.id.iv_tab_buttonBack);
     }
 
     private void initOnClickListener() {
@@ -219,6 +223,17 @@ public class RoundView extends AppCompatActivity {
                 }
             }
         });
+        IV_back_to_main.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startActivity_MainView();
+            }
+        });
+    }
+
+    public void startActivity_MainView() {
+        Intent i = new Intent(this, MainView.class);
+        startActivity(i);
+        finish();
     }
 
     private void checkFillupKnownWordList() {

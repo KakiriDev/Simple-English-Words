@@ -150,22 +150,26 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
     public void startActivity_RoundView() {
         Intent i = new Intent(this, RoundView.class);
         startActivity(i);
+        finish();
     }
 
 
     public void startActivity_WordListView() {
         Intent i = new Intent(this, WordListView.class);
         startActivity(i);
+        finish();
     }
 
     public void startActivity_LoginView() {
         Intent i = new Intent(this, LoginView.class);
         startActivity(i);
+        finish();
     }
 
     public void startActivity_Statistic() {
             Intent i = new Intent(this, Statistic.class);
             startActivity(i);
+        finish();
     }
 
     public void startCountWordsListener() {
