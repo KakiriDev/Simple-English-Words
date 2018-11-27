@@ -313,17 +313,17 @@ public class RoundView extends AppCompatActivity {
     }
 
     private void setTileText(ArrayList<Word> wordList) {
-        Text.setText(correctWord.getnazwaPl() + " --- " + correctWord.getscore());
-        Text1.setText(wordList.get(0).getnazwaEn() + " --- " + wordList.get(0).getscore());
-        Text2.setText(wordList.get(1).getnazwaEn() + " --- " + wordList.get(1).getscore());
-        Text3.setText(wordList.get(2).getnazwaEn() + " --- " + wordList.get(2).getscore());
-        Text4.setText(wordList.get(3).getnazwaEn() + " --- " + wordList.get(3).getscore());
-        Text5.setText(wordList.get(4).getnazwaEn() + " --- " + wordList.get(4).getscore());
-        Text6.setText(wordList.get(5).getnazwaEn() + " --- " + wordList.get(5).getscore());
-        Text7.setText(wordList.get(6).getnazwaEn() + " --- " + wordList.get(6).getscore());
-        Text8.setText(wordList.get(7).getnazwaEn() + " --- " + wordList.get(7).getscore());
-        Text9.setText(wordList.get(8).getnazwaEn() + " --- " + wordList.get(8).getscore());
-        Text10.setText(wordList.get(9).getnazwaEn() + " --- " + wordList.get(9).getscore());
+        Text.setText(correctWord.getnazwaPl());
+        Text1.setText(wordList.get(0).getnazwaEn());
+        Text2.setText(wordList.get(1).getnazwaEn());
+        Text3.setText(wordList.get(2).getnazwaEn());
+        Text4.setText(wordList.get(3).getnazwaEn());
+        Text5.setText(wordList.get(4).getnazwaEn());
+        Text6.setText(wordList.get(5).getnazwaEn());
+        Text7.setText(wordList.get(6).getnazwaEn());
+        Text8.setText(wordList.get(7).getnazwaEn());
+        Text9.setText(wordList.get(8).getnazwaEn());
+        Text10.setText(wordList.get(9).getnazwaEn());
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
