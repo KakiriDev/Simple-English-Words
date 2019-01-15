@@ -115,6 +115,7 @@ public class RoundView extends AppCompatActivity {
         }
     }
 
+    /** initialize Word cells **/
     private void initLayout() {
         LL = findViewById(R.id.LL);
         Text = findViewById(R.id.Tile);
@@ -142,6 +143,7 @@ public class RoundView extends AppCompatActivity {
         IV_back_to_main = findViewById(R.id.iv_tab_buttonBack);
     }
 
+    /** initialize click listener and check clicked word **/
     private void initOnClickListener() {
         LL1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -230,6 +232,7 @@ public class RoundView extends AppCompatActivity {
         });
     }
 
+    /** start main activity when back button is clicked **/
     public void startActivity_MainView() {
         Intent i = new Intent(this, MainView.class);
         startActivity(i);
@@ -239,6 +242,7 @@ public class RoundView extends AppCompatActivity {
     @Override
     public void onBackPressed() { }
 
+    /** check fillup KnownWordList, when list is empty (first run) or when number of words <90% is less than numberOfMinWords (20) then rand new word/s from UNKNOWN_WORD_LIST **/
     private void checkFillupKnownWordList() {
         if ((Constatus.KNOWN_WORD_LIST.isEmpty() || Constatus.getUncomplitedWords() < Constatus.numberOfMinWords)) {
             int count = Constatus.numberOfMinWords - Constatus.getUncomplitedWords();
@@ -249,6 +253,7 @@ public class RoundView extends AppCompatActivity {
         }
     }
 
+    /** compare cell from parametr with correct word, if is correct/incorrect then set score, check fillup list, setBackground and start new round **/
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void checkWord(int position, LinearLayout lin) {
         RandW score = new RandW();
@@ -265,6 +270,7 @@ public class RoundView extends AppCompatActivity {
         }
     }
 
+    /** if checked word is correct then setbackground changed cell and after delay start next round **/
     private void correctWord(final LinearLayout lin) {
         Log.e("checkErr", "correctWord");
         lin.postDelayed(new Runnable() {
@@ -282,6 +288,7 @@ public class RoundView extends AppCompatActivity {
 
     }
 
+    /** if checked word is incorrect then setbackground changed cell and after delay start next round **/
     private void wrongWord(final LinearLayout lin) {
         Log.e("checkErr", "wrongWord");
         lin.postDelayed(new Runnable() {
@@ -360,36 +367,16 @@ public class RoundView extends AppCompatActivity {
 
             if (wl.getid().equals(correctWord.getid())) {
                 switch (pos) {
-                    case 0:
-                        correctLL = LL1;
-                        break;
-                    case 1:
-                        correctLL = LL2;
-                        break;
-                    case 2:
-                        correctLL = LL3;
-                        break;
-                    case 3:
-                        correctLL = LL4;
-                        break;
-                    case 4:
-                        correctLL = LL5;
-                        break;
-                    case 5:
-                        correctLL = LL6;
-                        break;
-                    case 6:
-                        correctLL = LL7;
-                        break;
-                    case 7:
-                        correctLL = LL8;
-                        break;
-                    case 8:
-                        correctLL = LL9;
-                        break;
-                    case 9:
-                        correctLL = LL10;
-                        break;
+                    case 0: correctLL = LL1; break;
+                    case 1: correctLL = LL2; break;
+                    case 2: correctLL = LL3; break;
+                    case 3: correctLL = LL4; break;
+                    case 4: correctLL = LL5; break;
+                    case 5: correctLL = LL6; break;
+                    case 6: correctLL = LL7; break;
+                    case 7: correctLL = LL8; break;
+                    case 8: correctLL = LL9; break;
+                    case 9: correctLL = LL10; break;
                 }
             } else {
                 pos++;
