@@ -276,9 +276,11 @@ public class RoundView extends AppCompatActivity {
         int score  = wordId.getscore();
         if (score <= 90) {
             wordId.setscore(score + 10);
+            setTotalScore(10);
             setScore(wordId);
         } else {
             wordId.setscore(100);
+            setTotalScore(10);
             setScore(wordId);
         }
     }
@@ -287,9 +289,11 @@ public class RoundView extends AppCompatActivity {
         int score  = wordId.getscore();
         if (score > 10) {
             wordId.setscore(score - 10);
+            setTotalScore(-10);
             setScore(wordId);
         } else {
             wordId.setscore(0);
+            setTotalScore(-10);
             setScore(wordId);
         }
     }
@@ -302,6 +306,35 @@ public class RoundView extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId()).child("Words");
                 refUser.child(wordId.getid()).setValue(wordId);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setTotalScore(final Integer score) {
+
+        DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId()).child("userScore");
+
+                int oldScore = Integer.parseInt(dataSnapshot.child("userScore").getValue().toString());
+                //int oldScore = (int) dataSnapshot.child("userScore").getValue();
+              //  int oldScore = 0;
+                if (score > 0){
+                    refUser.setValue(score + oldScore);
+                } else {
+                    if((oldScore + score) > 0) {
+                        refUser.setValue(score + oldScore);
+                    } else {
+                        refUser.setValue(0);
+                    }
+                }
             }
 
             @Override

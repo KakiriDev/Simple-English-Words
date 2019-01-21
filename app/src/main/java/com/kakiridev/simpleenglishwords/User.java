@@ -5,12 +5,12 @@ public class User {
     public String userId;
     public String userName;
     public String userEmail;
-    public Integer userScore;
+    public String userScore;
 
     public User() {
     }
 
-    public User(String userId, String userName, String userEmail, Integer userScore) {
+    public User(String userId, String userName, String userEmail, String userScore) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -26,11 +26,11 @@ public class User {
                 '}';
     }
 
-    public Integer getUserScore() {
+    public String getUserScore() {
         return userScore;
     }
 
-    public void setUserScore(Integer userScore) {
+    public void setUserScore(String userScore) {
         this.userScore = userScore;
     }
 

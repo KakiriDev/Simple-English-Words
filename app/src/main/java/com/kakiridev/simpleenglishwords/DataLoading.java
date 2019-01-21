@@ -97,7 +97,16 @@ public class DataLoading extends AppCompatActivity {
                     if (dataSnapshot.getChildren() != null) {
                         String taskId = dsp.getKey().toString();
                         if (dataSnapshot.child(taskId).getChildren() != null) {
-                            User userDB = dataSnapshot.child(taskId).getValue(User.class);
+                            User userDB = new User();
+                            userDB.setUserName(dataSnapshot.child(taskId).child("userName").getValue().toString());
+                            userDB.setUserEmail(dataSnapshot.child(taskId).child("userEmail").getValue().toString());
+                            userDB.setUserScore(dataSnapshot.child(taskId).child("userScore").getValue().toString());
+                            userDB.setUserId(dataSnapshot.child(taskId).child("userId").getValue().toString());
+
+                             //       dataSnapshot.child(taskId).getValue(User.class);
+
+
+
                             Constatus.USER_LIST.add(userDB);
                         }
                     }

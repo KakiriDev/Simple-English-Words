@@ -125,14 +125,13 @@ public class LoginView extends AppCompatActivity {
                 refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userEmail").setValue(Constatus.LOGGED_USER.getUserEmail());
                 refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userName").setValue(Constatus.LOGGED_USER.getUserName());
                 refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userId").setValue(Constatus.LOGGED_USER.getUserId());
-          //      String scoree = dataSnapshot.child(Constatus.LOGGED_USER.userId.toString()).child("userScore").getValue().toString();
+                //check first login -> create score in db and set value as 0, when next login get value from database
                 if(dataSnapshot.child("Users").child(Constatus.LOGGED_USER.userId.toString()).child("userScore").exists()){
                     String score = dataSnapshot.child("Users").child(Constatus.LOGGED_USER.userId.toString()).child("userScore").getValue().toString();
                     refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userScore").setValue(score);
                 } else {
                     refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userScore").setValue(0);
                 }
-
             }
 
             @Override
