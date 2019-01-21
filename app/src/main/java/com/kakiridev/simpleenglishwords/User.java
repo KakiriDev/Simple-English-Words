@@ -5,14 +5,16 @@ public class User {
     public String userId;
     public String userName;
     public String userEmail;
+    public Integer userScore;
 
     public User() {
     }
 
-    public User(String userId, String userName, String userEmail) {
+    public User(String userId, String userName, String userEmail, Integer userScore) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
+        this.userScore = userScore;
     }
 
     @Override
@@ -22,6 +24,14 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 '}';
+    }
+
+    public Integer getUserScore() {
+        return userScore;
+    }
+
+    public void setUserScore(Integer userScore) {
+        this.userScore = userScore;
     }
 
     public String getUserId() {

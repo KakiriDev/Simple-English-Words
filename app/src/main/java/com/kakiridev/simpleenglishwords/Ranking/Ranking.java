@@ -12,11 +12,15 @@ public class Ranking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+
 /**
  * get all users
  * add users to list
  * sort list
  * show first 20 users with scores
+ *
+ *
+ * implement adding score to firebase on user
  */
 
     }

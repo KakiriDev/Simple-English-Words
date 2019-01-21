@@ -20,16 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.kakiridev.simpleenglishwords.KnowWords.RandW;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 
 public class RoundView extends AppCompatActivity {
     LinearLayout LL, LL1, LL2, LL3, LL4, LL5, LL6, LL7, LL8, LL9, LL10;
@@ -100,7 +99,10 @@ public class RoundView extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {}
 
+/**
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -114,7 +116,7 @@ public class RoundView extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+**/
     /** initialize Word cells **/
     private void initLayout() {
         LL = findViewById(R.id.LL);
@@ -238,9 +240,7 @@ public class RoundView extends AppCompatActivity {
         startActivity(i);
         finish();
     }
-    
-    @Override
-    public void onBackPressed() { }
+
 
     /** check fillup KnownWordList, when list is empty (first run) or when number of words <90% is less than numberOfMinWords (20) then rand new word/s from UNKNOWN_WORD_LIST **/
     private void checkFillupKnownWordList() {
@@ -256,18 +256,124 @@ public class RoundView extends AppCompatActivity {
     /** compare cell from parametr with correct word, if is correct/incorrect then set score, check fillup list, setBackground and start new round **/
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void checkWord(int position, LinearLayout lin) {
-        RandW score = new RandW();
+//        RandW score = new RandW();
         if (arrayWords.get(position).getid().equals(correctWord.getid())) {
-            score.correctWord(arrayWords.get(position));
+//            score.correctWord(arrayWords.get(position));
+            isCorrectWord(arrayWords.get(position));
             checkFillupKnownWordList();
             lin.setBackground(getResources().getDrawable(R.drawable.rounded_corners_correct));
             correctWord(lin);
         } else {
-            score.wrongWord(arrayWords.get(position));
+//            score.wrongWord(arrayWords.get(position));
+            isWrongWord(arrayWords.get(position));
             lin.setBackground(getResources().getDrawable(R.drawable.rounded_corners_wrong));
             correctLL.setBackground(getResources().getDrawable(R.drawable.rounded_corners_correct));
             wrongWord(lin);
         }
+    }
+
+    public void isCorrectWord(Word wordId) {
+        int score  = wordId.getscore();
+        if (score <= 90) {
+            wordId.setscore(score + 10);
+            setScore(wordId);
+        } else {
+            wordId.setscore(100);
+            setScore(wordId);
+        }
+    }
+
+    public void isWrongWord(Word wordId) {
+        int score  = wordId.getscore();
+        if (score > 10) {
+            wordId.setscore(score - 10);
+            setScore(wordId);
+        } else {
+            wordId.setscore(0);
+            setScore(wordId);
+        }
+    }
+
+    private void setScore(final Word wordId) {
+
+        DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DatabaseReference refUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(Constatus.LOGGED_USER.getUserId()).child("Words");
+                refUser.child(wordId.getid()).setValue(wordId);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /***
+     * rand words
+     * @param numberOfWords //total number of words
+     * @return //list of words with known word on position 0
+     */
+    public ArrayList<Word> randWords(int numberOfWords) {
+        Log.e("checkErr", "randWords");
+        ArrayList<Word> word = new ArrayList<Word>();
+        Random wordId = new Random();
+        Random percent = new Random();
+        int knowSize = Constatus.KNOWN_WORD_LIST.size();
+        int unknowSize = Constatus.UNKNOWN_WORD_LIST.size();
+
+        boolean isCorrect = false;
+        int a = 1;
+        while (word.size() < numberOfWords) {
+            Log.e("checkErr", "a=" + a);
+            a++;
+
+            int randPercent = percent.nextInt(100);
+            int knowId = wordId.nextInt(knowSize);
+            int unknowId = wordId.nextInt(unknowSize);
+            Log.e("checkErr", "knowId: " + knowId);
+            Word randKnownWord = Constatus.KNOWN_WORD_LIST.get(knowId);
+            Log.e("checkErr", "randKnownWord: " + randKnownWord.toString());
+            Word randUnknownWord = Constatus.UNKNOWN_WORD_LIST.get(unknowId);
+
+            if (isCorrect == false) {
+                // rand known word
+                if (randKnownWord.getscore() <= randPercent) {
+                    //word randomed correctly
+                    word.add(randKnownWord);
+                    isCorrect = true;
+                }
+            } else {
+                boolean uniq = true;
+                //rand other words
+                if (randKnownWord.getscore() <= randPercent) {
+                    //word randomed correctly
+                    for (Word w : word) {
+                        // Log.e("checkErr", "randKnownWord: " + randKnownWord.toString());
+                        //Log.e("checkErr", "w: " + w.toString());
+                        // Log.e("checkErr", "word: " + word.toString());
+                        if ((randKnownWord.getid()).equals(w.getid())) {
+                            uniq = false;
+                        }
+                    }
+                    if (uniq){
+                        word.add(randKnownWord);
+                    }
+                } else {
+                    for (Word w : word) {
+                        if ((randKnownWord.getid()).equals(w.getid())) {
+                            uniq = false;
+                        }
+                    }
+                    if (uniq){
+                        word.add(randUnknownWord);
+                    }
+                }
+            }
+        }
+        return word;
     }
 
     /** if checked word is correct then setbackground changed cell and after delay start next round **/
@@ -313,10 +419,9 @@ public class RoundView extends AppCompatActivity {
         Log.e("checkErr", "startGame");
         ArrayList<Word> tempList = new ArrayList<>();
         ArrayList<Word> wordList = new ArrayList<>();
-        RandW randW = new RandW();
         boolean uniqueWord;
         Log.e("checkErr", "randWords in");
-        wordList = randW.randWords(NUM_OF_WORDS);
+        wordList = randWords(NUM_OF_WORDS);
         Log.e("checkErr", "randWords out");
         if (correctLL != null)
             correctLL.setBackground(getResources().getDrawable(R.drawable.blackbutton));
@@ -327,7 +432,7 @@ public class RoundView extends AppCompatActivity {
                 uniqueWord = true;
                 for (Word tempWord : tempList) {
                     if (tempWord.getid().equals(wordList.get(0).getid())) {
-                        wordList = randW.randWords(NUM_OF_WORDS);
+                        wordList = randWords(NUM_OF_WORDS);
                         uniqueWord = false;
                         break;
                     }

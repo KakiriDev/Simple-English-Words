@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +46,7 @@ public class LoginView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signInButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.sign_in_button);
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -90,7 +91,14 @@ public class LoginView extends AppCompatActivity {
 
         if (user != null) {
             if (user.getDisplayName() != null) {
-                Constatus.LOGGED_USER = getUser();
+
+                User newUser = new User();
+                newUser.setUserEmail(getUser().getUserEmail());
+                newUser.setUserId(getUser().getUserId());
+                newUser.setUserName(getUser().getUserName());
+
+                //newUser.setUserScore(0);
+                Constatus.LOGGED_USER = newUser;
                 loged = true;
             }
         } else {
@@ -117,6 +125,14 @@ public class LoginView extends AppCompatActivity {
                 refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userEmail").setValue(Constatus.LOGGED_USER.getUserEmail());
                 refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userName").setValue(Constatus.LOGGED_USER.getUserName());
                 refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userId").setValue(Constatus.LOGGED_USER.getUserId());
+          //      String scoree = dataSnapshot.child(Constatus.LOGGED_USER.userId.toString()).child("userScore").getValue().toString();
+                if(dataSnapshot.child("Users").child(Constatus.LOGGED_USER.userId.toString()).child("userScore").exists()){
+                    String score = dataSnapshot.child("Users").child(Constatus.LOGGED_USER.userId.toString()).child("userScore").getValue().toString();
+                    refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userScore").setValue(score);
+                } else {
+                    refUser.child(Constatus.LOGGED_USER.userId.toString()).child("userScore").setValue(0);
+                }
+
             }
 
             @Override
