@@ -1,14 +1,23 @@
 package com.kakiridev.simpleenglishwords.Ranking;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.kakiridev.simpleenglishwords.Constatus;
+import com.kakiridev.simpleenglishwords.MainView;
 import com.kakiridev.simpleenglishwords.R;
 import com.kakiridev.simpleenglishwords.ShowListWords.WordListViewAdapter;
 import com.kakiridev.simpleenglishwords.User;
@@ -20,23 +29,65 @@ import java.util.Comparator;
 
 public class Ranking extends AppCompatActivity {
 
+    UserListViewAdapter adapter;
+    ListView listview;
     ArrayList<User> user_list = new ArrayList<User>();
+    ImageView IV_back_to_main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setToolbar();
         setContentView(R.layout.activity_ranking);
+        loadUsers();
+        IV_back_to_main = findViewById(R.id.iv_tab_buttonBack);
+        initOnClickListener();
+    }
 
 
-/**
- * get all users
- * add users to list
- * sort list
- * show first 20 users with scores
- *
- *
- * implement adding score to firebase on user
- */
+    @Override
+    public void onBackPressed() {}
 
+    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
+    private void setToolbar(){
+        //make translucent statusBar on kitkat devices
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        //make fully Android Transparent Status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    /** initialize click listener and check clicked word **/
+    private void initOnClickListener() {
+        IV_back_to_main.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startActivity_MainView();
+            }
+        });
+    }
+
+    /** start main activity when back button is clicked **/
+    public void startActivity_MainView() {
+        Intent i = new Intent(this, MainView.class);
+        startActivity(i);
+        finish();
     }
 
     //TODO DONE load1
@@ -60,7 +111,7 @@ public class Ranking extends AppCompatActivity {
                     }
                 }
 
-              //  setAdapter(user_list);
+                setAdapter(user_list);
 
             }
 
@@ -79,15 +130,12 @@ public class Ranking extends AppCompatActivity {
         Collections.sort(users, new Comparator<User>() {
             @Override
             public int compare(User lhs, User rhs) {
-                int lhs_int = Integer.parseInt(lhs.getUserScore());
-                int rhs_int = Integer.parseInt(rhs.getUserScore());
-
                 // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                return lhs_int > rhs_int ? -1 : (lhs_int < rhs_int) ? 1 : 0;
+                return lhs.getUserScoreToInt() > rhs.getUserScoreToInt() ? -1 : (lhs.getUserScoreToInt() < rhs.getUserScoreToInt()) ? 1 : 0;
             }
         });
 
-        adapter = new WordListViewAdapter(this, R.layout.word_listview_row, word_list);
+        adapter = new UserListViewAdapter(this, R.layout.user_listview_row, users);
         listview = findViewById(R.id.listview);
         listview.setAdapter(adapter);
 

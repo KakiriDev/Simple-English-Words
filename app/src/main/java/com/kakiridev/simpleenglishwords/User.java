@@ -26,6 +26,10 @@ public class User {
                 '}';
     }
 
+    public Integer getUserScoreToInt() {
+        return Integer.parseInt(userScore);
+    }
+
     public String getUserScore() {
         return userScore;
     }

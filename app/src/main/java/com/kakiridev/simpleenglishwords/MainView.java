@@ -28,6 +28,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.kakiridev.simpleenglishwords.LoginView.LoginView;
+import com.kakiridev.simpleenglishwords.Ranking.Ranking;
 import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
 import com.kakiridev.simpleenglishwords.Statistic.Statistic;
 
@@ -135,6 +136,15 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
             }
         });
 
+        /** Ranking **/
+        LinearLayout buttonRanking = findViewById(R.id.table);
+        buttonRanking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_Ranking();
+            }
+        });
+
     }
 
     private void startAnim(){
@@ -182,6 +192,11 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         finish();
     }
 
+    public void startActivity_Ranking() {
+        Intent i = new Intent(this, Ranking.class);
+        startActivity(i);
+        finish();
+    }
 
     public void startActivity_WordListView() {
         Intent i = new Intent(this, WordListView.class);

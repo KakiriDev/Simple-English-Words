@@ -59,6 +59,7 @@
 
                     <!-- NAPISY NA TABLICY -->
                     <LinearLayout
+                        android:id="@+id/table"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_row="1"
