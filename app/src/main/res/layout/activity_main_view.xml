@@ -136,14 +136,14 @@
         <LinearLayout
             android:id="@+id/LL"
             android:layout_width="10dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_row="2"
             android:layout_columnSpan="2"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="60dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="10dp">
 
             <Button
                 android:id="@+id/btn_start_round"
@@ -162,14 +162,14 @@
         <LinearLayout
             android:id="@+id/LL1"
             android:layout_width="10dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_row="2"
             android:layout_columnSpan="2"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="60dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="10dp">
 
             <Button
                 android:id="@+id/btn_show_word_list"
@@ -189,14 +189,14 @@
         <LinearLayout
             android:id="@+id/LL2"
             android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_row="2"
             android:layout_columnSpan="2"
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="60dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="10dp">
 
             <Button
                 android:id="@+id/btn_show_ranking"
@@ -208,11 +208,36 @@
                 android:gravity="center"
                 android:maxLines="10"
                 android:padding="5dp"
-                android:text="Show ranking"
+                android:text="Statystyki"
                 android:textSize="20sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/LL3"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_row="4"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="60dp"
+            android:paddingBottom="10dp">
 
+            <Button
+                android:id="@+id/btn_ranking"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/purplebutton"
+                android:gravity="center"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:text="Ranking"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
     </GridLayout>
 

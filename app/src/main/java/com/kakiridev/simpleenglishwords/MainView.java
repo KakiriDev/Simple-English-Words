@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,9 +50,9 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
     public static ArrayList<User> userList;
 
-    LinearLayout anim1, anim2, anim3;
+    LinearLayout anim1, anim2, anim3, anim4;
     GridLayout black_tab;
-    Animation fromLeft1, fromLeft2, fromLeft3, fromTop, toolbar;
+    Animation fromLeft1, fromLeft2, fromLeft3, fromLeft4, fromTop, toolbar;
     TextView hello, score, ranked;
 
 
@@ -136,8 +138,17 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
             }
         });
 
+        /** SpeechAttack **/
+        LinearLayout buttonSpeechAttack = findViewById(R.id.table);
+        buttonSpeechAttack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity_SpeechAttack();
+            }
+        });
+
         /** Ranking **/
-        LinearLayout buttonRanking = findViewById(R.id.table);
+        Button buttonRanking = findViewById(R.id.btn_ranking);
         buttonRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +163,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         fromLeft1 = AnimationUtils.loadAnimation(this, R.anim.from_left1);
         fromLeft2 = AnimationUtils.loadAnimation(this, R.anim.from_left2);
         fromLeft3 = AnimationUtils.loadAnimation(this, R.anim.from_left3);
+        fromLeft4 = AnimationUtils.loadAnimation(this, R.anim.from_left4);
         fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top);
 
         anim1 = findViewById(R.id.LL);
@@ -162,6 +174,9 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
 
         anim3 = findViewById(R.id.LL2);
         anim3.setAnimation(fromLeft3);
+
+        anim4 = findViewById(R.id.LL3);
+        anim4.setAnimation(fromLeft4);
 
         black_tab = findViewById(R.id.black_tab);
         black_tab.setAnimation(fromTop);
@@ -176,6 +191,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         Typeface typeface = ResourcesCompat.getFont(this, R.font.squeaky);
         Typeface typeface1 = ResourcesCompat.getFont(this, R.font.squeaky);
         Typeface typeface2 = ResourcesCompat.getFont(this, R.font.squeaky);
+        Typeface typeface3 = ResourcesCompat.getFont(this, R.font.squeaky);
 
         hello = findViewById(R.id.hello);
         score = findViewById(R.id.score);
@@ -184,6 +200,7 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         hello.setTypeface(typeface);
         score.setTypeface(typeface1);
         ranked.setTypeface(typeface2);
+
     }
 
     public void startActivity_RoundView() {
@@ -214,6 +231,13 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
             Intent i = new Intent(this, Statistic.class);
             startActivity(i);
         finish();
+    }
+
+
+    public void startActivity_SpeechAttack() {
+        Intent i = new Intent(this, SpeechAttack.class);
+        startActivity(i);
+       // finish();
     }
 
     public void startCountWordsListener() {
