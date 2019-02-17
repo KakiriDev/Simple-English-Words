@@ -17,8 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,9 +27,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.kakiridev.simpleenglishwords.CategoryList.CategoryListView;
 import com.kakiridev.simpleenglishwords.LoginView.LoginView;
 import com.kakiridev.simpleenglishwords.Ranking.Ranking;
 import com.kakiridev.simpleenglishwords.ShowListWords.WordListView;
+import com.kakiridev.simpleenglishwords.SpeechAttack.SpeechAttack;
 import com.kakiridev.simpleenglishwords.Statistic.Statistic;
 
 import java.util.ArrayList;
@@ -143,7 +143,8 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         buttonSpeechAttack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity_SpeechAttack();
+                //startActivity_SpeechAttack();
+                startActivity_Category();
             }
         });
 
@@ -233,7 +234,11 @@ public class MainView extends AppCompatActivity implements FirebaseResponseListe
         finish();
     }
 
-
+    public void startActivity_Category() {
+        Intent i = new Intent(this, CategoryListView.class);
+        startActivity(i);
+        // finish();
+    }
     public void startActivity_SpeechAttack() {
         Intent i = new Intent(this, SpeechAttack.class);
         startActivity(i);

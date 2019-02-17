@@ -74,6 +74,7 @@ public class RoundView extends AppCompatActivity {
         mAdView.loadAd(adRequest);
     }
 
+    /** TOOLBAR **/
     private void setToolbarText(){
         Typeface typeface = ResourcesCompat.getFont(this, R.font.squeaky);
 
@@ -83,7 +84,6 @@ public class RoundView extends AppCompatActivity {
         hello.setTypeface(typeface);
         score.setTypeface(typeface);
     }
-
     private void setToolbar(){
         //make translucent statusBar on kitkat devices
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -98,9 +98,7 @@ public class RoundView extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
     }
-
-    @Override
-    public void onBackPressed() {}
+    @Override public void onBackPressed() {}
 
 /**
     @Override
@@ -345,7 +343,7 @@ public class RoundView extends AppCompatActivity {
     }
 
     /***
-     * rand words
+     * rand words and return list f words
      * @param numberOfWords //total number of words
      * @return //list of words with known word on position 0
      */
